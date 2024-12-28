@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="../static/css/index.css">
+        <script src="https://kit.fontawesome.com/c472cc2087.js" crossorigin="anonymous"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        </style>
+    </head>
+    <body>
+        <button class="openside-btn" id="openside-btn" style="display: none;">
+            <img src="../static/img/sidebar.png" style="height:100%;width:100%;object-fit: contain; ">                           
+        </button>
+        <div class="main" id="main">
+            <div class="side" id="side">
+                <div class="side-btn">
+                    <button id="closeside-btn">
+                        <img src="../static/img/cancel.png" style="transform: rotate(45deg);height:50%;width:50%;object-fit: contain;">                           
+                    </button>
+                </div>
+                <button class="new_chat">
+                    <span>Begin New Chat</span>
+                    <div style="height: 20px;width:20px">
+                        <img src="../static/img/image.png" style="height:100%;width:100%;object-fit: contain;">                            
+                    </div>
+                </button>
+                <div class="search-recent">
+                    <div class="search-input">
+                        <img src="../static/img/search.png" style="height:15px;width:15px;object-fit: contain;margin-left: 10px;">
+                        <input type="text" placeholder="Search">
+                    </div>
+                    <span style="width:90%;text-align: left;margin-top: 15px; color: white; font-size: 15px;">Recent Chats</span>
+                    <div class="chat-titles-display">
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                        <div class="title-template">
+                            <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                            <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
+                            <button>
+                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <div style="display: flex;flex-direction: row;align-items: center;gap:10px">
+                        <img src="../static/img/user.png">
+                        <span>User Profile</span>
+                    </div>
+                    <img src="../static/img/settings.png">
+                    
+                </div>
+            </div>
+            <div class="main-content" id="main-content">
+                <div class="nav">
+                    <div class="name">
+                        <span>Negotio</span>
+                    </div>
+                    <div class="tools">
+                        <div class="tools">
+                            <a href="#general" class="tool-name">
+                                <span>General</span>
+                            </a>
+                            <a href="#voice" class="tool-name">
+                                <span>Voice</span>
+                            </a>
+                            <a href="#about" class="tool-name">
+                                <span>About</span>
+                            </a>
+                            <a href="#contact_us" class="tool-name">
+                                <span>Contact us</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div style="width: 100px;">
+
+                    </div>
+                </div>
+                <div class="changer">
+                    <div class="general" id="general">
+                        <div class="chat-content-display"></div>
+                        <div class="total-input-box">
+                            <button>
+                                <img src="../static/img/file.png">
+                            </button>
+                            <input type="text" id="sendText">
+                            <button style="background-color: transparent;">
+                                <img src="../static/img/mic.png">
+                            </button>
+                            <button id="submit">
+                                <img src="../static/img/arrow.png">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="voice" id="voice">voice</div>
+                    <div class="about" id="about">about</div>
+                    <div class="contact_us" id="contact_us">contact us</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="../static/js/index.js"></script>
+</html>
