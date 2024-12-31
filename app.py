@@ -8,6 +8,7 @@ import shutil
 import httpx
 import uvicorn
 import os
+import time
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -31,7 +32,8 @@ async def send_text(request: Request):
     # Get the data as JSON from the request body
     data = await request.json()
     text = data.get("text", "")
-    
+    print(data)
+    time.sleep(10)
     # Process the text here
     return JSONResponse(content={"message": f"Received text: {text}"})
 
