@@ -13,6 +13,7 @@ const generalPanel=document.getElementById("general-call");
 const voicePanel=document.getElementById("voice-call");
 const aboutPanel=document.getElementById("about-call");
 const contactUsPanel=document.getElementById("contact_us-call");
+const titles=document.getElementById("titles");
 let entered=0;
 openSideBtn.addEventListener("click", () => {
     console.log("openside");
@@ -101,7 +102,7 @@ async function sendTemplateText(a) {
     // document.getElementById("response").textContent = result.message;
 }
 async function sendText() {
-    entered=1;
+    entered = 1;
     const text = textField.value.trim(); // Trim whitespace
     const msgContain = document.getElementById("msg-contain");
 
@@ -110,28 +111,26 @@ async function sendText() {
         return;
     }
 
-    if (introTemplate.style.display != "none") {
+    // Adjust UI elements for the chat interface
+    if (introTemplate.style.display !== "none") {
         introTemplate.style.display = "none";
         msgContain.style.display = "flex";
     }
 
-        if (chatContentDisplay.style.marginTop != "30px") {
-            chatContentDisplay.style.marginTop = "30px";
-        }
-    
-        
+    if (chatContentDisplay.style.marginTop !== "30px") {
+        chatContentDisplay.style.marginTop = "30px";
+    }
+
     if (window.getComputedStyle(navBar).top === "30px") {
-        console.log("nav shrinked");
+        console.log("Navbar shrunk");
         navBar.style.top = "10px";
     }
 
     console.log("Sending text:", text);
 
-    // Create the "send" div
+    // Create and append the "send" message div
     const sendDiv = document.createElement("div");
     sendDiv.classList.add("send");
-
-    // Add the span and image
     sendDiv.innerHTML = `
         <span>${text}</span>
         <img src="../static/img/user.png" alt="User">
@@ -139,10 +138,9 @@ async function sendText() {
     msgContain.appendChild(sendDiv);
     textField.value = "";
 
-    // Create the "receive" div with loading animation
+    // Create and append the "receive" div with loading animation
     const receiveDiv = document.createElement("div");
     receiveDiv.classList.add("receive");
-
     receiveDiv.innerHTML = `
         <img src="../static/img/spark.png">
         <div class="loading_contain fade-out">
@@ -150,7 +148,11 @@ async function sendText() {
             <div class="loading" style="width: 100px;"></div>
         </div>
     `;
-    msgContain.appendChild(receiveDiv); 
+    msgContain.appendChild(receiveDiv);
+    msgContain.scrollTo({
+        top: msgContain.scrollHeight,
+        behavior: "smooth",
+    });
     const loadingContainer = receiveDiv.querySelector(".loading_contain");
 
     // Enable animation for the image
@@ -158,7 +160,6 @@ async function sendText() {
     receiveImg.classList.add("pop");
 
     try {
-        // Prepare and send data to the server
         const response = await fetch("http://127.0.0.1:8000/send-text/", {
             method: "POST",
             headers: {
@@ -176,39 +177,67 @@ async function sendText() {
             return;
         }
 
-        // Parse and display the server response
         const result = await response.json();
         console.log("Server response:", result);
-                // Add fade-out class to loading container
+
+        // Add fade-out class to loading container
         loadingContainer.classList.add("hidden");
+        receiveImg.style.animation = "none";
 
-
-        // Update the receiveDiv content with the server response
-        // receiveDiv.innerHTML = `
-        //     <img src="../static/img/spark.png" alt="Bot">
-        //     <span>${result.message}</span>
-        // `;
-
-        // Disable animation for the image
-        const updatedImg = receiveDiv.querySelector("img");
-        updatedImg.style.animation = "none";
-                // Wait for fade-out transition to complete
         setTimeout(() => {
             // Replace loading with the server response text
-            loadingContainer.remove(); // Remove the loading bars
-            const responseText = document.createElement("span");
-            responseText.classList.add("fade-in");
-            responseText.textContent = result.message;
+            loadingContainer.remove();
 
-            receiveDiv.appendChild(responseText);
+            const divReceive = document.createElement("div");
+            divReceive.classList.add("receive_div");
 
-            // Add visible class to fade-in text
+            const answerText = document.createElement("span");
+            answerText.classList.add("fade-in");
+            answerText.innerHTML = formatTextWithGaps(result.content);
+            divReceive.appendChild(answerText);
+
+            receiveDiv.appendChild(divReceive);
+
+            // Add title template
+            const titleTemplate = document.createElement("div");
+            titleTemplate.classList.add("title-template");
+
+            const titleDiv = document.createElement("div");
+            titleDiv.classList.add("title-first");
+
+            const titleDivImg = document.createElement("img");
+            titleDivImg.src = "../static/img/msg.png";
+
+            const titleDivSpan = document.createElement("span");
+            titleDivSpan.textContent = result.title;
+
+            titleDiv.appendChild(titleDivImg);
+            titleDiv.appendChild(titleDivSpan);
+
+            const titleBtn = document.createElement("button");
+            const titleBtnImg = document.createElement("img");
+            titleBtnImg.src = "../static/img/dots.png";
+            titleBtn.appendChild(titleBtnImg);
+
+            titleTemplate.appendChild(titleDiv);
+            titleTemplate.appendChild(titleBtn);
+
+            titles.append(titleTemplate);
+
             setTimeout(() => {
-                responseText.classList.add("visible");
+                answerText.classList.add("visible");
+                msgContain.scrollTo({
+                    top: msgContain.scrollHeight,
+                    behavior: "smooth",
+                });
             }, 0);
-        }, 500); // Match the fade-out duration
+        }, 500);
+
         // Scroll to the bottom of the message container
-        msgContain.scrollTop = msgContain.scrollHeight;
+        msgContain.scrollTo({
+            top: msgContain.scrollHeight,
+            behavior: "smooth",
+        });
 
     } catch (error) {
         console.error("Error sending message:", error);
@@ -217,9 +246,65 @@ async function sendText() {
         msgContain.innerHTML = "";
         chatContentDisplay.style.marginTop = "0px";
         navBar.style.top = "30px";
+        entered = 0;
         alert("Failed to send your message. Please try again later.");
     }
 }
+
+/**
+ * Adds two-line gaps before Sanskrit or Hindi text and renders **words** as bold.
+ * @param {string} text - The input text to format.
+ * @returns {string} The formatted text with gaps and bold words.
+ */
+function formatTextWithGaps(text) {
+    const devanagariRegex = /[\u0900-\u097F]/; // Matches Devanagari script characters
+    const boldRegex = /\*\*(.+?)\*\*/g; // Matches words enclosed with ** (e.g., **word**)
+    const lines = text.split("\n");
+
+    let formattedText = "";
+    let isSanskritBlock = false;
+
+    lines.forEach((line, index) => {
+        const trimmedLine = line.trim(); // Remove unnecessary whitespace
+        if (!trimmedLine) return; // Skip empty lines
+
+        // Replace **words** with <b>word</b>
+        const lineWithBold = trimmedLine.replace(boldRegex, "<b>$1</b>");
+
+        const isDevanagariLine = devanagariRegex.test(lineWithBold);
+
+        if (isDevanagariLine) {
+            if (!isSanskritBlock) {
+                // Start a new Sanskrit block with <div> instead of <span>
+                formattedText += `<div id="sanskrit">`;
+                isSanskritBlock = true;
+            }
+            formattedText += lineWithBold; // Add the line to the Sanskrit block
+        } else {
+            if (isSanskritBlock) {
+                // Close the Sanskrit block when non-Sanskrit text is encountered
+                formattedText += `</div>`;
+                isSanskritBlock = false;
+            }
+            // Add the non-Sanskrit line
+            formattedText += `<span>${lineWithBold}</span>`;
+        }
+
+        // Add a line break unless it's the last line
+        if (index < lines.length - 1) {
+            formattedText += "<br>";
+        }
+    });
+
+    // Close any open Sanskrit block at the end
+    if (isSanskritBlock) {
+        formattedText += `</div>`;
+    }
+
+    return formattedText;
+}
+
+
 
 
 document.getElementById("sendText").addEventListener("keydown", function (event) {

@@ -31,88 +31,17 @@
                         <input type="text" placeholder="Search">
                     </div>
                     <span style="width:90%;text-align: left;margin-top: 15px; color: #ffffff; font-size: 14px;">Recent Chats</span>
-                    <div class="chat-titles-display">
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
+                    <div class="chat-titles-display" id="titles">
+                        <!-- <div class="title-template">
+                            <div class="title-first">
+                                <img src="../static/img/msg.png" >
                                 <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
                             </div>
                             <button>
                                 <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
                             </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
-                        <div class="title-template">
-                            <div style="display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px">
-                                <img src="../static/img/msg.png" style="height:15px;width:15px;object-fit: contain;">
-                                <span>aksjdhflsakjdflkjsahfkjsahdfkajh</span>
-                            </div>
-                            <button>
-                                <img src="../static/img/dots.png" style="height:100%;width:100%;object-fit: contain;">
-                            </button>
-                        </div>
+                        </div> -->
+                        
                         
                     </div>
                 </div>
@@ -135,9 +64,9 @@
                         <a href="#general" id="general-call" class="tool-name" data-target="general">
                             <span>General</span>
                         </a>
-                        <a href="#voice" id="voice-call" class="tool-name" data-target="voice">
+                        <!-- <a href="#voice" id="voice-call" class="tool-name" data-target="voice">
                             <span>Voice</span>
-                        </a>
+                        </a> -->
                         <a href="#about" id="about-call" class="tool-name" data-target="about">
                             <span>About</span>
                         </a>
@@ -160,9 +89,13 @@
                                 </div>
                                 <div class="receive">
                                     <img src="../static/img/spark.png">
-                                    <span>Hello how are you? 
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam sapiente libero temporibus! Est doloremque quibusdam voluptas ut, suscipit quas quaerat repellat voluptatibus, error odio, magnam libero ex blanditiis architecto quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, nam. Quae tenetur tempora dolore quo dolorum vitae eius saepe, eum nulla enim accusamus eligendi tempore autem dolorem laborum officia! Provident!
-                                    </span>
+                                    <div class="receive_div"> 
+                                        <span>chapter:1</span>
+                                        <span>verse:8</span>
+                                        <span id="sanskrit">अनाधृष्याः युध्य सुस्थिराः सारसंग्रामेषु</span>
+                                        <span id="sanskrit">translation</span>
+                                        <span>answer</span>
+                                    </div>
                                     <div class="loading_contain">
                                         <div class="loading"></div>
                                         <div class="loading" style="width:100px"></div>
@@ -246,29 +179,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="contact_us content-section" id="contact_us" data-section="contact_us" >
+                    <div class="contact_us content-section" id="contact_us" data-section="contact_us">
                         <div class="about-template" style="background:linear-gradient(to left,transparent,rgb(33, 32, 32));">
                             <div style="width:100px;height:100px;">
                                 <img src="../static/img/sabari.jpeg">
                             </div>
                             <div class="hover-effect" style="display: flex;justify-content: space-evenly;align-items: center;flex-direction: row;gap:10px;width:400px;height:90%">
-                                <a href="https://github.com/Sabari2005" target="_blank"><img src="../static/img/github-ico.png" style="height:40px;width:40px;object-fit: contain;"></a>
-                                <a href="https://www.linkedin.com/in/sabari-vadivelan-s" target="_blank"><img src="../static/img/in.png" style="height:40px;width:40px;object-fit: contain;"></a>
-                                <a href="mailto:sabari132005@gmail.com"><img src="../static/img/mail.png" style="height:40px;width:40px;object-fit: contain;"></a>
+                                <a href="https://github.com/Sabari2005" target="_blank" data-tooltip="GitHub">
+                                    <img src="../static/img/github-ico.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
+                                <a href="https://www.linkedin.com/in/sabari-vadivelan-s" target="_blank" data-tooltip="LinkedIn">
+                                    <img src="../static/img/in.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
+                                <a href="mailto:sabari132005@gmail.com" data-tooltip="Email">
+                                    <img src="../static/img/mail.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
                             </div>
                         </div>
                         <div class="about-template" style="background:linear-gradient(to right,transparent,rgb(33, 32, 32));">
                             <div class="hover-effect" style="display: flex;justify-content: space-evenly;align-items: center;flex-direction: row;gap:10px;width:400px;height:90%">
-                                <a href="https://github.com/UVARAJAND" target="_blank"><img src="../static/img/github-ico.png" style="height:40px;width:40px;object-fit: contain;"></a>
-                                <a href="https://www.linkedin.com/in/uvarajan-dev" target="_blank"><img src="../static/img/in.png" style="height:40px;width:40px;object-fit: contain;"></a>
-                                <a href="mailto:uvarajandev@gmail.com.com"><img src="../static/img/mail.png" style="height:40px;width:40px;object-fit: contain;"></a>
+                                <a href="https://github.com/UVARAJAND" target="_blank" data-tooltip="GitHub">
+                                    <img src="../static/img/github-ico.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
+                                <a href="https://www.linkedin.com/in/uvarajan-dev" target="_blank" data-tooltip="LinkedIn">
+                                    <img src="../static/img/in.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
+                                <a href="mailto:uvarajandev@gmail.com" data-tooltip="Email">
+                                    <img src="../static/img/mail.png" style="height:40px;width:40px;object-fit: contain;">
+                                </a>
                             </div>
                             <div style="width:100px;height:100px;">
                                 <img src="../static/img/ulogo.jpg">
                             </div>
                         </div>
-                        
                     </div>
+                    
                 </div>
             </div>
         </div>
