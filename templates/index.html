@@ -19,12 +19,14 @@
                         <img src="../static/img/cancel.png" style="transform: rotate(45deg);height:50%;width:50%;object-fit: contain;">                           
                     </button>
                 </div>
-                <button class="new_chat">
-                    <span>Begin New Chat</span>
-                    <div style="height: 15px;width:15px">
-                        <img src="../static/img/image.png" style="height:100%;width:100%;object-fit: contain;">                            
-                    </div>
-                </button>
+                
+                    <button class="new_chat" id="new_chat">
+                        <span>Begin New Chat</span>
+                        <div style="height: 15px;width:15px">
+                            <img src="../static/img/image.png" style="height:100%;width:100%;object-fit: contain;">                            
+                        </div>
+                    </button>
+                
                 <div class="search-recent">
                     <div class="search-input">
                         <img src="../static/img/search.png" style="height:15px;width:15px;object-fit: contain;margin-left: 10px;">
@@ -64,9 +66,9 @@
                         <a href="#general" id="general-call" class="tool-name" data-target="general">
                             <span>General</span>
                         </a>
-                        <!-- <a href="#voice" id="voice-call" class="tool-name" data-target="voice">
+                        <a href="#voice" id="voice-call" class="tool-name" data-target="voice">
                             <span>Voice</span>
-                        </a> -->
+                        </a>
                         <a href="#about" id="about-call" class="tool-name" data-target="about">
                             <span>About</span>
                         </a>
@@ -83,7 +85,7 @@
                     <div class="general content-section" id="general" data-section="general" >
                         <div class="chat-content-display" id="chat-content-display">
                             <div class="msg-contain" id="msg-contain">
-                                <!-- <div class="send">
+                                <div class="send">
                                     <span>ia! Provident!                            </span>
                                     <img src="../static/img/user.png">
                                 </div>
@@ -100,49 +102,47 @@
                                         <div class="loading"></div>
                                         <div class="loading" style="width:100px"></div>
                                     </div>
-                                </div> -->
-                                
+                                </div>
                             </div>
-                            <div class="intro-template" id="intro-template">
-                                <span style="font-size: 35px;font-weight: 500;color: white;">How can we <span class="name" style="font-size: 35px;font-weight: 400;">assist </span> you?</span>
-                                <div style="font-size: 15px;color: #767676;width:500px;text-align: center;">
-                                    <span>Get expert guidance powered by AI Negotio specializing in Yoga Bhagavad Gita, and Negotiation. Know your sologa that suits your needs and start your conversation with ease.</span>
+                        </div>
+                        <div class="intro-template" id="intro-template">
+                            <span style="font-size: 35px;font-weight: 500;color: white;">How can we <span class="name" style="font-size: 35px;font-weight: 400;">assist </span> you?</span>
+                            <div style="font-size: 15px;color: #767676;width:500px;text-align: center;">
+                                <span>Get expert guidance powered by AI Negotio specializing in Yoga Bhagavad Gita, and Negotiation. Know your sologa that suits your needs and start your conversation with ease.</span>
+                            </div>
+                            <div class="card-holder">
+                                <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
+                                    <div style="display: flex;justify-content: space-between;height:80px">
+                                        <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
+                                            self confidence </span>
+                                        <img src="../static/img/redirect.png">
+                                    </div>
+                                    <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
                                 </div>
-                                <div class="card-holder">
-                                    <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
-                                        <div style="display: flex;justify-content: space-between;height:80px">
-                                            <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
-                                                self confidence </span>
-                                            <img src="../static/img/redirect.png">
-                                        </div>
-                                        <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
+                                <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
+                                    <div style="display: flex;justify-content: space-between;height:80px">
+                                        <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
+                                            self confidence </span>
+                                        <img src="../static/img/redirect.png">
                                     </div>
-                                    <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
-                                        <div style="display: flex;justify-content: space-between;height:80px">
-                                            <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
-                                                self confidence </span>
-                                            <img src="../static/img/redirect.png">
-                                        </div>
-                                        <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
-                                    </div>
-                                    <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
-                                        <div style="display: flex;justify-content: space-between;height:80px">
-                                            <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
-                                                self confidence </span>
-                                            <img src="../static/img/redirect.png">
-                                        </div>
-                                        <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
-                                    </div>
-                                    <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
-                                        <div style="display: flex;justify-content: space-between;height:80px">
-                                            <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
-                                                self confidence </span>
-                                            <img src="../static/img/redirect.png">
-                                        </div>
-                                        <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
-                                    </div>
-                                                               
+                                    <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
                                 </div>
+                                <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
+                                    <div style="display: flex;justify-content: space-between;height:80px">
+                                        <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
+                                            self confidence </span>
+                                        <img src="../static/img/redirect.png">
+                                    </div>
+                                    <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
+                                </div>
+                                <div class="card-template" onclick="sendTemplateText('Lord Krishna')">
+                                    <div style="display: flex;justify-content: space-between;height:80px">
+                                        <span style="font-size: 18px;width:150px;color: #C2C2C2;font-weight: 500;">Build your
+                                            self confidence </span>
+                                        <img src="../static/img/redirect.png">
+                                    </div>
+                                    <span style="font-size: 11px;color:#B1B1B1">Discover the best thing in the world to showcase your properties.</span>
+                                </div>                          
                             </div>
                         </div>
                         <div class="total-input-box">
@@ -150,8 +150,8 @@
                                 <img src="../static/img/file.png">
                             </button>
                             <input type="text" id="sendText">
-                            <button style="background-color: transparent;">
-                                <img src="../static/img/mic.png">
+                            <button id="voice" style="background-color: transparent;">
+                                <img id="micIcon" src="../static/img/mic.png">
                             </button>
                             <button id="submit">
                                 <img src="../static/img/arrow.png">
