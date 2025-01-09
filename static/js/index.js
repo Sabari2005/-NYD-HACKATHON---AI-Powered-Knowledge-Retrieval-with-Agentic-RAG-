@@ -131,8 +131,21 @@ function addTemplate(chat_id) {
     console.log(`Template for chat_id ${chat_id} successfully added.`);
 }
 
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 
+
+
+new_chat.addEventListener("click", async () => {
+    console.log("Creating new chat...");
+    chat_id = await createNewChat();
+    if (chat_id) {
+        console.log("New chat created with ID:", chat_id);
+        console.log("Now you can send messages to the new chat.");
+
+    } else {
+        console.error("Failed to create new chat.");
+    }
+});
 
 
 
@@ -427,17 +440,7 @@ function formatTextWithGaps(text) {
  // Declare chat_id and initialize to null
 
 // Event listener for creating a new chat
-new_chat.addEventListener("click", async () => {
-    console.log("Creating new chat...");
-    chat_id = await createNewChat();
-    if (chat_id) {
-        console.log("New chat created with ID:", chat_id);
-        console.log("Now you can send messages to the new chat.");
 
-    } else {
-        console.error("Failed to create new chat.");
-    }
-});
 async function createNewChat() {
     console.log("new_chat");
     resetui();
@@ -462,6 +465,10 @@ async function createNewChat() {
         
     }
 }
+
+
+
+
 async function sendMessage(chat_id, question) {
     const message = { question: question };
     addTemplate(chat_id);
@@ -487,6 +494,10 @@ async function sendMessage(chat_id, question) {
         console.error('Error:', error);
     }
 }
+
+
+
+
 async function getChatMessages(chat_id) {
     try {
         const response = await fetch(`http://127.0.0.1:8000/get_chat_messages/${chat_id}/`, {
@@ -558,6 +569,7 @@ textField.addEventListener("keydown", async function (event) {
         }
     }
 });
+
 
 
 
