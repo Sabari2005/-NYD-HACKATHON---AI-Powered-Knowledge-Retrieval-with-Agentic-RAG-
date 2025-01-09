@@ -12,7 +12,7 @@ import time
 import sqlite3
 from typing import Dict
 import uvicorn
-# from total import main_total
+from total import main_total
 app = FastAPI()
 # Static files and templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -20,7 +20,7 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["127.0.0.2:8001"],
+    allow_origins=["127.0.0.2:8001","https://804a-2409-4072-985-396-7521-e8ca-cfcf-f6ff.ngrok-free.app"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -61,7 +61,8 @@ async def add_message(chat_id: int, message: Dict[str, str]):
 
     # Insert the message
     question = message.get("question")
-    answer =  message.get("question")
+    # answer =message.get("question")
+    answer=main_total(question)
 
     if not question or not answer:
         conn.close()
@@ -106,6 +107,19 @@ async def get_recents():
     # Convert chats dict to a list for the response
     return {"chats": list(chats.values())}
 
+
+last_chat_id = None
+
+def settingChatid(current_chat_id):
+    global last_chat_id
+    if last_chat_id is None:
+        print(f"Setting initial chat_id: {current_chat_id}")
+    elif last_chat_id == current_chat_id:
+        print(f"The chat_id is not changed. Current chat_id: {current_chat_id}")
+    else:
+        print(f"Chat_id has changed. Previous chat_id: {last_chat_id}, New chat_id: {current_chat_id}")
+    last_chat_id = current_chat_id
+
 # Retrieve all messages for a specific chat
 @app.get("/get_chat_messages/{chat_id}/")
 async def get_chat_messages(chat_id: int):
@@ -114,7 +128,37 @@ async def get_chat_messages(chat_id: int):
         "SELECT question, answer FROM messages WHERE chat_id = ? ORDER BY id", (chat_id,)
     ).fetchall()
     conn.close()
+    settingChatid(chat_id)
     return {"messages": [dict(message) for message in messages]}
+
+@app.delete("/delete_chat/{chat_id}/")
+async def delete_chat(chat_id: int):
+    conn = get_db_connection()
+    try:
+        # Start a transaction
+        conn.execute("BEGIN")
+        
+        # Delete from the messages table
+        conn.execute("DELETE FROM messages WHERE chat_id = ?", (chat_id,))
+        
+        # Delete from the chats table
+        conn.execute("DELETE FROM chats WHERE id = ?", (chat_id,))
+        
+        # Commit the transaction
+        conn.commit()
+        conn.close()
+
+        print(f"chat_id {chat_id} deleted successfully from both tables.")
+        return {"message": f"chat_id {chat_id} deleted successfully from both tables."}
+
+    except Exception as e:
+        # Rollback the transaction in case of an error
+        conn.rollback()
+        conn.close()
+
+        print(f"Error deleting chat_id {chat_id}: {e}")
+        return {"error": f"Error deleting chat_id {chat_id}: {e}"}, 500
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -206,7 +206,8 @@ width: 20%;
     overflow-y: scroll;
     margin-top: 5px;
     min-height: 100px;       /* Minimum height of the container */
-    max-height: 100%;       /* Maximum height of the container */
+    max-height: 100%; 
+    padding-bottom: 5px;      /* Maximum height of the container */
     /* overflow-y: auto;  */
     width:100%;
     /* background-color: red; */
@@ -216,11 +217,9 @@ width: 20%;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    /* gap:30px; */
     margin-top: 10px;
     width:85%;
     height:35px;
-    /* padding:5px; */
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
@@ -230,6 +229,7 @@ width: 20%;
     overflow: hidden;
     /* background-color: transparent; */
     color:white;
+    box-shadow: 0 0 5px rgb(101, 142, 255);
 }
 .title-template:hover{
     cursor: pointer;
@@ -245,13 +245,13 @@ width: 20%;
     -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     white-space: nowrap;
 }
-.title-template button{
+/* .title-template button{
     height:15px;
     width:15px;
     outline: none;
     border: none;
     background-color: transparent;
-}
+} */
 .title-first{
     display: flex;flex-direction: row;justify-content:flex-start;align-items:center;gap:20px;width:200px
 }
@@ -525,7 +525,6 @@ a{
     margin-top: 0px;
     height:99%;
     width:950px;
-    background-color: #424242;
     overflow-x: hidden;
     transition: margin-top 0.5s ease-in-out;
 }
@@ -767,9 +766,9 @@ a{
 .hover-effect a::before {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 0px;
+    right: 100px;
+    /* transform: translateX(-50%); */
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 5px 10px;
@@ -779,14 +778,122 @@ a{
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    transform: translateX(-50%) translateY(10px);
+    /* transform: translateX(-50%) translateY(10px); */
 }
 
 .hover-effect a:hover::before {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    /* transform: translateX(-50%) translateY(0); */
 }
 
 .hover-effect img:hover{
     background-color:#242723;
 }
+.chat-titles-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: auto; /* Allow scrolling for vertical overflow */
+    margin-top: 5px;
+    min-height: 100px;
+    max-height: 100%; /* Ensure the container does not constrain child elements */
+    width: 100%;
+}
+
+.title-template {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+    width: 85%;
+    height: 35px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    background-color: #424242;
+    color: white;
+    position: relative; /* Important for tooltip positioning */
+    overflow: visible; /* Ensure the tooltip is not clipped */
+}
+
+.title-template:hover {
+    cursor: pointer;
+    background-color: #424242;
+}
+
+.title-template span {
+    width: 120px;
+    overflow: hidden;
+    /* background-color: green; */
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* .title-template button {
+    height: 15px;
+    width: 15px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    position: relative;
+} */
+
+.title-first {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    width: 200px;
+}
+
+.title-first img {
+    height: 15px;
+    width: 15px;
+    object-fit: contain;
+}
+
+/* Tooltip styling */
+.delete-btn{
+    display: flex; /* Initially hidden */
+    position: absolute;
+    top: -10px; /* Position above the dots button */
+    left: 200px; /* Align horizontally with dots button */
+    background-color: #3b3232;
+    color: white;
+    border: 2px black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    /* box-shadow: 0px 2px 5px rgb(239, 239, 239); */
+    z-index: 100; /* Ensure it's above other elements */
+    cursor: pointer;
+    width:fit-content;
+    height:fit-content;
+                            
+}
+
+.dot-btn{
+outline: none;
+border: none;
+    height:20px;
+    width:40px;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+.dot-btn img{
+height:20px;
+width:20px;
+object-fit: contain;
+/* padding: 5px; */
+}
+.dot-btn:hover{
+    box-shadow: 0 0 5px grey;
+    background-color: grey;
+    }
+/* Show delete button when hovering over dots button or delete button */
+
