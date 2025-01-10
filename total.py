@@ -48,7 +48,7 @@ def retrieve_answer(input_question, top_k=1):
 
 
 # Initialize Groq client for Llama
-client = Groq(api_key="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")  # Replace with your Groq API key
+client = Groq(api_key="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")  # Replace with your Groq API key
 
 def answer_query_from_llama(query):
     chat_completion = client.chat.completions.create(
@@ -83,7 +83,14 @@ def refine_query_with_llama(query, retrieved_info):
 
 # Llama Final Response Generation
 # Llama Final Response Generation
-def generate_final_response_with_llama(query, retrieved_info, llm_retrieved):
+def feedback_loop():
+  question = ""
+  answer = ""
+  loop_template = f" This the previous question asked by the user :\n {question}\n\  answer:\n0{answer}\n.\n If the it is useful make use of it ,it is helpful in know the state of the user what they try to ask.\n"
+  return loop_template
+
+# Llama Final Response Generation
+def generate_final_response_with_llama(query, retrieved_info, llm_retrieved, feedback):
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -92,9 +99,10 @@ def generate_final_response_with_llama(query, retrieved_info, llm_retrieved):
                            f"Original query: '{query}'\n"
                            f"Retrieved information from semantic search:\n{retrieved_info}\n"
                            f"Retrieved information from Llama:\n{llm_retrieved}\n"
+                           f"{feedback}\n"
                             "Provide Bookname, chapter, verse, sanskrit, traslation if the query is directly belongs to sanskrit\n"
-                            "Don't say how you process this context in the answer"
                             "If the query is not directly related to Bhagavad Gita and Pantanjali yoga sutra return 'This Question not directly related to Bhagavad Gita or Pantanjali yoga sutra' with no extra words"
+                            "Don't say how you process this context in the answer"
                             "Using all the provided context, generate a complete, accurate, and concise answer."
                             "Provide the response with clear line breaks and proper use of quotes."
             }
@@ -104,10 +112,13 @@ def generate_final_response_with_llama(query, retrieved_info, llm_retrieved):
     return chat_completion.choices[0].message.content.strip()
 
  # Main workflow
-def main_total(a):
+def main_total(a,feedback):
    
+    # Main workflow
+    user_query = a
 
-    user_query=a
+    feedback = feedback
+
     # Step 1: Retrieve answer from Pinecone
     semantic_results = retrieve_answer(user_query, top_k=3)
 
@@ -123,13 +134,16 @@ def main_total(a):
     refined_query = refine_query_with_llama(user_query, retrieved_info)
 
     # Step 4: Generate final response using Llama
-    final_response = generate_final_response_with_llama(refined_query, retrieved_info, llm_result)
+    final_response = generate_final_response_with_llama(refined_query, retrieved_info, llm_result, feedback)
 
+    # Display the results
+    print(llm_result)
     print("=====================================================")
     print(f"Refined Query: {refined_query}")
     print("-----------------------------------------------------")
     print(f"Final Response:\n{final_response}")
     print("=====================================================")
     return final_response
+
 
 # main_total()

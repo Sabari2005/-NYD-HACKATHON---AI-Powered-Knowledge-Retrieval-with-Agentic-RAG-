@@ -12,7 +12,7 @@ import time
 import sqlite3
 from typing import Dict
 import uvicorn
-from total import main_total
+# from total import main_total
 app = FastAPI()
 # Static files and templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -20,7 +20,7 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["127.0.0.2:8001","https://804a-2409-4072-985-396-7521-e8ca-cfcf-f6ff.ngrok-free.app"],
+    allow_origins=["127.0.0.2:8001","127.0.0.5001","https://ce78-2409-4072-985-396-4d2e-8bb7-82e0-a45.ngrok-free.app/","https://ac74-210-212-229-229.ngrok-free.app/","https://06d0-210-212-229-229.ngrok-free.app/","https://804a-2409-4072-985-396-7521-e8ca-cfcf-f6ff.ngrok-free.app","https://f743-210-212-229-229.ngrok-free.app/"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,6 +36,53 @@ def get_db_connection():
     conn = sqlite3.connect("chat.db")
     conn.row_factory = sqlite3.Row  # Makes rows accessible as dictionaries
     return conn
+def feedback_loop(q,a):
+  if (q=="")and(a==""):
+      return ""
+  else:
+    print("entering feedback loop")
+    question =q
+    answer = a
+    loop_template = f" This the previous question asked by the user :\n {question}\n\  answer:\n0{answer}\n.\n If the it is useful make use of it ,it is helpful in know the state of the user what they try to ask.\n"
+    return loop_template
+
+def get_chats(chat_id):
+    conn = get_db_connection()
+    messages = conn.execute(
+        "SELECT question, answer,created_at FROM messages WHERE chat_id = ? ORDER BY id", (chat_id,)
+    ).fetchall()
+    a = [dict(message) for message in messages]
+
+    # Invalid answer to skip
+    invalid_answer = "This Question not directly related to Bhagavad Gita or Pantanjali yoga sutra"
+
+    # Initialize defaults
+    question = ""
+    answer = ""
+
+    # Iterate backward to find a valid entry
+    for entry in reversed(a):
+        if entry.get('question') and entry.get('answer') and entry['answer'] != invalid_answer:
+            question = entry['question']
+            answer = entry['answer']
+            break
+
+    # Debugging output
+    print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
+    print("last question", question)
+    print("last answer", answer)
+    print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
+
+    conn.close()
+    return feedback_loop(question,answer)
+
+
+def settingChatid(current_chat_id):
+    # global last_chat_id
+    return get_chats(current_chat_id)
+    # last_chat_id = current_chat_id
+
+
 
 # Create a new chat and return its ID
 @app.post("/new_chat/")
@@ -60,20 +107,28 @@ async def add_message(chat_id: int, message: Dict[str, str]):
         raise HTTPException(status_code=404, detail="Chat ID not found")
 
     # Insert the message
+    feedback=settingChatid(chat_id)  
+    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
+    print(feedback)
+    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
     question = message.get("question")
-    # answer =message.get("question")
-    answer=main_total(question)
+    time.sleep(1)
+    answer =message.get("question")
+    # answer=main_total(question,feedback)
+    # print(answer)
 
     if not question or not answer:
         conn.close()
         raise HTTPException(status_code=400, detail="Both 'question' and 'answer' are required")
-
+    # if answer!="This Question not directly related to Bhagavad Gita or Pantanjali yoga sutra":
     cursor.execute(
         "INSERT INTO messages (chat_id, question, answer) VALUES (?, ?, ?)",
         (chat_id, question, answer),
     )
     conn.commit()
     conn.close()
+
+
     return {"status": "Message added successfully"}
 
 @app.get("/recents/")
@@ -108,17 +163,8 @@ async def get_recents():
     return {"chats": list(chats.values())}
 
 
-last_chat_id = None
+# last_chat_id = None
 
-def settingChatid(current_chat_id):
-    global last_chat_id
-    if last_chat_id is None:
-        print(f"Setting initial chat_id: {current_chat_id}")
-    elif last_chat_id == current_chat_id:
-        print(f"The chat_id is not changed. Current chat_id: {current_chat_id}")
-    else:
-        print(f"Chat_id has changed. Previous chat_id: {last_chat_id}, New chat_id: {current_chat_id}")
-    last_chat_id = current_chat_id
 
 # Retrieve all messages for a specific chat
 @app.get("/get_chat_messages/{chat_id}/")
