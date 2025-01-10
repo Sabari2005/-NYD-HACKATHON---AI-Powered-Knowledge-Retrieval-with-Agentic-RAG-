@@ -15,10 +15,9 @@ const aboutPanel=document.getElementById("about-call");
 const contactUsPanel=document.getElementById("contact_us-call");
 const titles=document.getElementById("titles");
 const new_chat=document.getElementById("new_chat");
-
 let entered=0;
-window.chat_id = null; // Tracks the current active chat ID
-window.set_id = null;  // Tracks the last set chat ID
+window.chat_id = null; 
+window.set_id = null;  
 openSideBtn.addEventListener("click", () => {
     console.log("openside");
     mainPanel.style.width="80%";
@@ -33,7 +32,6 @@ closeSideBtn.addEventListener("click", () => {
     closeSideBtn.style.display = "none";
 });
 document.addEventListener('DOMContentLoaded', () => {
-    // createNewChat();
     const tools = document.querySelectorAll('.tool-name');
     const sections = document.querySelectorAll('.content-section');
     const backgroundIndicator = document.querySelector('.background-indicator');
@@ -48,15 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tool.addEventListener('click', function (e) {
             e.preventDefault();
             const targetSection = this.getAttribute('data-target');
-            
-            // Switch active tool
             tools.forEach(t => t.classList.remove('selected'));
             this.classList.add('selected');
-
-            // Switch active section
             activateSection(targetSection);
 
-            // Animate background indicator
             moveBackground(this);
         });
     });
@@ -78,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
-let lastChatId = null; // Store the ID of the last created chat
+let lastChatId = null; 
 new_chat.addEventListener("click", async () => {
     console.log("Creating new chat...");
     const lastChatHasContent = await checkLastChatHasContent(lastChatId);
@@ -88,13 +81,16 @@ new_chat.addEventListener("click", async () => {
         if (chat_id) {
             console.log("New chat created with ID:", chat_id);
             console.log("Now you can send messages to the new chat.");
-            lastChatId = chat_id; // Update lastChatId
+            lastChatId = chat_id; 
         } else {
             console.error("Failed to create new chat.");
+            alert("failed to create chat. reload the server or website");
+            introDefault();
+            resetui();
+            location.reload();
         }
     } else {
-        // introDefault();
-        // resetui();
+
         createNewChat()
         new_chat.disabled=false;
         console.warn("The last chat is empty. Please add content before creating a new chat.");
@@ -119,9 +115,14 @@ async function checkLastChatHasContent(chat_id) {
             return data.messages && data.messages.length > 0; // Check if there are any messages
         } else {
             console.error("Error retrieving messages:", data.detail);
+            alert("we got some problem in our side.");
+            alert("reloading website to resolve this problem");
+            location.reload();
         }
     } catch (error) {
         console.error("Error:", error);
+        alert("we got some problem in our side.");
+        location.reload();
     }
 
     return false; // Default to false if unable to check
@@ -233,207 +234,6 @@ function displayMessages(messages) {
     textField.disabled=false;
 }
 
-// function addTemplate(chat_id, question) {
-//     console.log(`Attempting to create template for chat_id: ${chat_id}`);
-
-//     // Check if an element with the same chat_id is already present
-//     const existingTemplate = Array.from(titles.children).find((child) => {
-//         return child.getAttribute("data-chat-id") === String(chat_id); // Compare chat_id
-//     });
-
-//     if (existingTemplate) {
-//         console.log(`Template for chat_id ${chat_id} already exists. Skipping creation.`);
-//         return;
-//     }
-
-//     console.log(`Creating template for chat_id: ${chat_id}`);
-//     const titleTemplate = document.createElement("button");
-//     titleTemplate.classList.add("title-template");
-//     titleTemplate.setAttribute("data-chat-id", chat_id);
-
-//     const titleDiv = document.createElement("div");
-//     titleDiv.classList.add("title-first");
-
-//     const titleDivImg = document.createElement("img");
-//     titleDivImg.src = "../static/img/msg.png";
-
-//     const titleDivSpan = document.createElement("span");
-//     titleDivSpan.textContent = question;
-
-//     titleDiv.appendChild(titleDivImg);
-//     titleDiv.appendChild(titleDivSpan);
-
-//     const titleBtn = document.createElement("div");
-//     titleBtn.classList.add("delete-btn");
-//     const titleBtnImg = document.createElement("img");
-//     titleBtnImg.src = "../static/img/delete.png";
-    
-//     titleBtn.appendChild(titleBtnImg);
-
-//     titleTemplate.appendChild(titleDiv);
-//     titleTemplate.appendChild(titleBtn);
-//     // titleBtn.addEventListener("click", (event) => {
-//     //     event.stopPropagation(); // Prevent triggering the titleTemplate click event
-    
-//     //     // Check if the delete button already exists
-
-//     //     if (!titleTemplate.querySelector(".delete-btn")) {
-//     //         const deleteBtn = document.createElement("button");
-//     //         deleteBtn.textContent = "Delete";
-//     //         deleteBtn.classList.add("delete-btn");
-    
-//     //         deleteBtn.addEventListener("click", async (e) => {
-//     //             e.stopPropagation(); // Prevent triggering the outside click handler
-    
-//     //             const confirmed = confirm(`Are you sure you want to delete this chat?`);
-//     //             if (!confirmed) return;
-    
-//     //             try {
-//     //                 // Attempt to delete from the database
-//     //                 new_chat.disabled = true;
-
-//     //                 const response = await fetch(`/delete_chat/${chat_id}/`, { method: "DELETE" });
-    
-//     //                 if (response.ok) {
-//     //                     console.log(`chat_id ${chat_id} deleted successfully from the database.`);
-                        
-//     //                     // Remove the template from the UI
-//     //                     titleTemplate.remove();
-    
-//     //                     // Handle remaining templates
-//     //                     const remainingTemplates = Array.from(titles.children);
-//     //                     if (remainingTemplates.length > 0) {
-//     //                         const lastTemplate = remainingTemplates[remainingTemplates.length - 1];
-//     //                         lastTemplate.click(); // Auto-select last template
-//     //                         new_chat.disabled = true;
-//     //                     } else {
-//     //                         console.log("No templates remaining.");
-//     //                         createNewChat(); // Reset to default state
-//     //                     }
-//     //                 } else {
-//     //                     console.error(`Failed to delete chat_id ${chat_id} from the database.`);
-//     //                     alert("Failed to delete the chat. Please try again.");
-//     //                 }
-//     //             } catch (error) {
-//     //                 console.error("Error deleting chat_id:", error);
-//     //                 alert("An error occurred while deleting the chat.");
-//     //             }
-//     //         });
-    
-//     //         titleTemplate.appendChild(deleteBtn);
-//     //         document.addEventListener("click", (event) => {
-//     //             // Find all delete buttons
-//     //             const deleteButtons = document.querySelectorAll(".delete-btn");
-            
-//     //             deleteButtons.forEach((deleteBtn) => {
-//     //                 // Check if the clicked element is the delete button or its parent
-//     //                 if (!deleteBtn.contains(event.target) && !deleteBtn.parentElement.contains(event.target)) {
-//     //                     deleteBtn.style.display = "none";
-//     //                 }
-//     //             });
-//     //         });
-//     //     }
-//     // });
-    
-    
-//     // Add onclick event to the template for fetching chat messages
-    
-//     titleBtn.addEventListener("click", (event) => {
-//         event.stopPropagation(); // Prevent triggering the titleTemplate click event
-    
-//         // Check if the delete button already exists
-//         if (!titleTemplate.querySelector(".delete-btn")) {
-//             const deleteBtn = document.createElement("button");
-//             deleteBtn.textContent = "Delete";
-//             deleteBtn.classList.add("delete-btn");
-//             deleteBtn.style.display = "block"; // Initially visible when created
-    
-//             deleteBtn.addEventListener("click", async (e) => {
-//                 e.stopPropagation(); // Prevent triggering the outside click handler
-    
-//                 const confirmed = confirm(`Are you sure you want to delete this chat?`);
-//                 if (!confirmed) return;
-    
-//                 try {
-//                     // Attempt to delete from the database
-//                     new_chat.disabled = true;
-    
-//                     const response = await fetch(`/delete_chat/${chat_id}/`, { method: "DELETE" });
-    
-//                     if (response.ok) {
-//                         console.log(`chat_id ${chat_id} deleted successfully from the database.`);
-    
-//                         // Remove the template from the UI
-//                         titleTemplate.remove();
-    
-//                         // Handle remaining templates
-//                         const remainingTemplates = Array.from(titles.children);
-//                         if (remainingTemplates.length > 0) {
-//                             const lastTemplate = remainingTemplates[remainingTemplates.length - 1];
-//                             lastTemplate.click(); // Auto-select last template
-//                             new_chat.disabled = true;
-//                         } else {
-//                             console.log("No templates remaining.");
-//                             createNewChat(); // Reset to default state
-//                         }
-//                     } else {
-//                         console.error(`Failed to delete chat_id ${chat_id} from the database.`);
-//                         alert("Failed to delete the chat. Please try again.");
-//                     }
-//                 } catch (error) {
-//                     console.error("Error deleting chat_id:", error);
-//                     alert("An error occurred while deleting the chat.");
-//                 }
-//             });
-    
-//             titleTemplate.appendChild(deleteBtn);
-    
-//             // Add global click listener to hide the delete button
-//             document.addEventListener("click", (docEvent) => {
-//                 if (!deleteBtn.contains(docEvent.target) && !titleTemplate.contains(docEvent.target)) {
-//                     deleteBtn.style.display = "none"; // Hide the button
-//                 }
-//             });
-//         }
-    
-//         // Ensure delete button is visible when the dots button is clicked
-//         const deleteBtn = titleTemplate.querySelector(".delete-btn");
-//         if (deleteBtn) {
-//             deleteBtn.style.display = "block";
-//         }
-//     });
-    
-//     titleTemplate.onclick = () => {
-//         console.log(`Clicked on template for chat_id: ${chat_id}`);
-//         window.chat_id = chat_id; // Update the global chat_id
-//         setId(); // Ensure the current chat ID is updated
-//         getChatMessages(chat_id); // Fetch and display messages for this chat
-
-//         // Remove the active class from all templates
-//         Array.from(titles.children).forEach((child) => {
-//             child.classList.remove("active");
-//             child.style.boxShadow = "none";
-//         });
-
-//         // Add the active class to the clicked template
-//         titleTemplate.classList.add("active");
-//         titleTemplate.style.boxShadow = "0 0 5px rgb(101, 142, 255)";
-//     };
-
-//     // Check if this is the active chat and apply styles
-//     if (window.chat_id === chat_id) {
-//         Array.from(titles.children).forEach((child) => {
-//             child.classList.remove("active");
-//             child.style.boxShadow = "none";
-//         });
-//         titleTemplate.classList.add("active");
-//         titleTemplate.style.boxShadow = "0 0 5px rgb(101, 142, 255)";
-//     }
-
-//     titles.append(titleTemplate);
-//     console.log(`Template for chat_id ${chat_id} successfully added.`);
-    
-// }
 function addTemplate(chat_id, question) {
     console.log(`Attempting to create template for chat_id: ${chat_id}`);
 
@@ -514,7 +314,7 @@ function addTemplate(chat_id, question) {
             }
         } catch (error) {
             console.error("Error deleting chat_id:", error);
-            alert("An error occurred while deleting the chat.");
+            alert("An error occurred while deleting the chat. try again later");
         }
     });
 
@@ -560,7 +360,7 @@ titles.scrollTo({
 
 async function getChatMessages(chat_id) {
     const titleTemplateButtons = document.querySelectorAll('.title-template');
-    let dotsBtn=document.querySelectorAll(".dot-btn");
+    let dotsBtn=document.querySelectorAll(".delete-btn");
     introTemplate.style.display="none";
     msgContain.style.display="flex";
     navBar.style.top="10px";
@@ -570,9 +370,10 @@ async function getChatMessages(chat_id) {
         titleTemplateButtons.forEach(button => {
             button.disabled = true;
           });
-          dotsBtn.forEach(button => {
-            button.disabled = true;
-          });
+          dotsBtn.forEach((btn) => {
+            btn.style.pointerEvents = "none";  // Prevent interactions
+            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+        });
         textField.disabled=true;
         const response = await fetch(`/get_chat_messages/${chat_id}/`, {
             method: 'GET',
@@ -589,16 +390,22 @@ async function getChatMessages(chat_id) {
             titleTemplateButtons.forEach(button => {
                 button.disabled = false;
               });
-              dotsBtn.forEach(button => {
-                button.disabled = false;
-              });
+              dotsBtn.forEach((btn) => {
+                btn.style.pointerEvents = "auto";  // Prevent interactions
+                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+            });
               textField.disabled=false;
               
         } else {
             console.error("Error retrieving messages:", data.detail);
+            alert("cannot communicate with server . the website will be reloaded shortly to resolve this error or (restart the server)")
+            location.reload();
         }
     } catch (error) {
         console.error("Error:", error);
+        
+        alert("cannot communicate with server . the website will be reloaded shortly to resolve this error or (restart the server)")
+        location.reload();
     }
 }
 async function createNewChat() {
@@ -606,15 +413,16 @@ async function createNewChat() {
     resetui();
     introDefault();
     const titleTemplateButtons = document.querySelectorAll('.title-template');
-    let dotsBtn=document.querySelectorAll(".dot-btn");
+    let dotsBtn=document.querySelectorAll(".delete-btn");
     try {
         new_chat.disabled = true;
         titleTemplateButtons.forEach(button => {
             button.disabled = true;
           });   
-          dotsBtn.forEach(button => {
-            button.disabled = true;
-          });       
+          dotsBtn.forEach((btn) => {
+            btn.style.pointerEvents = "none";  // Prevent interactions
+            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+        });      
         const response = await fetch('/new_chat/', {
             method: 'POST',
             headers: {
@@ -631,15 +439,20 @@ async function createNewChat() {
             titleTemplateButtons.forEach(button => {
                 button.disabled = false;
               });
-              dotsBtn.forEach(button => {
-                button.disabled = false;
-              });
+              dotsBtn.forEach((btn) => {
+                btn.style.pointerEvents = "aotu";  // Prevent interactions
+                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+            });
             return data.chat_id;
         } else {
             console.error("Failed to create a new chat.");
+            alert("cannot communicate with server. website will be reloaded shortly to resolve this error or try restarting the server")
+            location.reload();
         }
     } catch (error) {
         console.error("Error:", error);
+        alert("cannot communicate with server. website will be reloaded shortly to resolve this error or try restarting the server")
+        location.reload();
     }
     return null; // Return null if chat creation fails
 }
@@ -654,33 +467,28 @@ async function sendMessage(chat_id, question) {
         sendDiv.classList.add("send");
 
         const sendSpan = document.createElement("span");
-        sendSpan.textContent = message.question; // Add the question text
+        sendSpan.textContent = message.question;
 
         const sendImg = document.createElement("img");
-        sendImg.src = "../static/img/user.png"; // User image
+        sendImg.src = "../static/img/user.png"; 
 
         sendDiv.appendChild(sendSpan);
         sendDiv.appendChild(sendImg);
         msgContain.appendChild(sendDiv);
-        // const loadingContainer = document.createElement('div');
     const receiveDiv = document.createElement("div");
     receiveDiv.classList.add("receive");
     const receiveImg = document.createElement("img");
-    receiveImg.src = "../static/img/spark.png"; // Spark image
+    receiveImg.src = "../static/img/spark.png"; 
     receiveImg.style.animationName="pop";
     receiveDiv.appendChild(receiveImg);
     const loadingContainer = document.createElement('div');
     loadingContainer.className = 'loading_contain';
-    // Create the first loading div
     const loading1 = document.createElement('div');
     loading1.className = 'loading';
-
-    // Create the second loading div with custom style
     const loading2 = document.createElement('div');
     loading2.className = 'loading';
     loading2.style.width = '100px';
 
-    // Append the loading divs to the container
     loadingContainer.appendChild(loading1);
     loadingContainer.appendChild(loading2);
     receiveDiv.appendChild(loadingContainer)
@@ -690,15 +498,16 @@ async function sendMessage(chat_id, question) {
         behavior: "smooth",
     });
     const titleTemplateButtons = document.querySelectorAll('.title-template');
-    let dotsBtn=document.querySelectorAll(".dot-btn");
+    let dotsBtn=document.querySelectorAll(".delete-btn");
     try {
         new_chat.disabled = true;
         titleTemplateButtons.forEach(button => {
             button.disabled = true;
           });
-          dotsBtn.forEach(button => {
-            button.disabled = true;
-          });
+          dotsBtn.forEach((btn) => {
+            btn.style.pointerEvents = "none";  // Prevent interactions
+            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+        });
         const response = await fetch(`/add_message/${chat_id}/`, {
             method: 'POST',
             headers: {
@@ -716,14 +525,27 @@ async function sendMessage(chat_id, question) {
             titleTemplateButtons.forEach(button => {
                 button.disabled = false;
               });
-              dotsBtn.forEach(button => {
-                button.disabled = false;
-              });
+              dotsBtn.forEach((btn) => {
+                btn.style.pointerEvents = "none";  // Prevent interactions
+                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+            });
         } else {
             console.error("Error adding message:", data.detail);
+            alert("cannot send msg Plz reload the website or check server is running")
+            introDefault();
+            resetui();
+            location.reload();
+            // createNewChat();
         }
     } catch (error) {
         console.error("Error:", error);
+        alert("cannot send msg Plz reload the website or check server is running")
+        introDefault();
+        resetui();
+        location.reload();
+
+        
+        // createNewChat();
     }
 }
 
@@ -733,9 +555,25 @@ function setId() {
 }
 
 
-function sendTemplateText(a){
-    textField.value=a;
-    totalSubmit.click();
+async function sendTemplateText(a){
+    // textField.value=a;
+    // totalSubmit.click();
+    if (window.chat_id) {
+        console.log(`Sending message to chat_id: ${window.chat_id}`);
+        textField.value = "";
+        textField.disabled=true;
+        sendMessage(window.chat_id, a);
+    } else {
+        console.log("No active chat. Creating a new chat...");
+        const newChatId = await createNewChat();
+        if (newChatId) {
+            textField.value = "";
+            textField.disabled=true;
+            sendMessage(newChatId, a);
+        } else {
+            console.error("Failed to create a new chat.");
+        }
+    }
 }
 function introDefault(){
     introTemplate.style.display="flex";

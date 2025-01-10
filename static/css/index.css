@@ -793,7 +793,7 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* For tooltip positioning */
+    position:relative; /* For tooltip positioning */
     color: white;
     font-size: 12px;
     cursor: pointer;
@@ -821,7 +821,6 @@ a{
     right: 10px;
     transform: translateX(-50%);
     white-space: nowrap;
-    z-index: 100;
     opacity: 0;
     transition: opacity 0.3s;
 
@@ -843,16 +842,22 @@ border: none;
     border-radius: 5px;
 }
 #new_chat:disabled{
-    background-color: #cccccc;
+    /* background-color: #cccccc; */
+    filter: opacity(0.5);
     color: #666666;
     cursor: not-allowed;
 }
 .title-template:disabled {
-    background-color: #cccccc;
+    filter: opacity(0.8);
     color: #666666;
     cursor: not-allowed;
-    opacity: 0.6; /* Optional: make it look more "disabled" */
+ /* Optional: make it look more "disabled" */
   }
-
+  .delete-btn:disabled {
+    filter: opacity(0.8);
+    color: #666666;
+    cursor: not-allowed;
+ /* Optional: make it look more "disabled" */
+  }
 /* Show delete button when hovering over dots button or delete button */
 

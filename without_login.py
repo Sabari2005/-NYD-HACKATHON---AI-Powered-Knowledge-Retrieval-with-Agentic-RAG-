@@ -12,7 +12,8 @@ import time
 import sqlite3
 from typing import Dict
 import uvicorn
-# from total import main_total
+from total import main_total
+import sqlite3
 app = FastAPI()
 # Static files and templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -25,10 +26,52 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+def create_tables():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Create `chats` table if it doesn't exist
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chats (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    # Create `messages` table if it doesn't exist
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            chat_id INTEGER,
+            question TEXT,
+            answer TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (chat_id) REFERENCES chats(id)
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+def drop_all_tables():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Drop the `messages` table
+    cursor.execute("DROP TABLE IF EXISTS messages")
+
+    # Drop the `chats` table
+    cursor.execute("DROP TABLE IF EXISTS chats")
+
+    conn.commit()
+    conn.close()
+    print("All tables have been dropped from the database.")
 
 @app.get("/", response_class=HTMLResponse)
 async def login_page(request: Request):
     """Serve the login page."""
+    drop_all_tables()
+    create_tables()
     return templates.TemplateResponse("index.html", {"request": request})
 
 # Helper function to get a database connection
@@ -68,10 +111,10 @@ def get_chats(chat_id):
             break
 
     # Debugging output
-    print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
-    print("last question", question)
-    print("last answer", answer)
-    print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
+    # print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
+    # print("last question", question)
+    # print("last answer", answer)
+    # print("33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333")
 
     conn.close()
     return feedback_loop(question,answer)
@@ -108,13 +151,13 @@ async def add_message(chat_id: int, message: Dict[str, str]):
 
     # Insert the message
     feedback=settingChatid(chat_id)  
-    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
-    print(feedback)
-    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
+    # print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
+    # print(feedback)
+    # print("8888888888888888888888888888888888888888888888888888888888888888888888888888888888888")
     question = message.get("question")
-    time.sleep(1)
-    answer =message.get("question")
-    # answer=main_total(question,feedback)
+    # time.sleep(10)
+    # answer =message.get("question")
+    answer=main_total(question,feedback)
     # print(answer)
 
     if not question or not answer:

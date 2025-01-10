@@ -137,12 +137,12 @@ def main_total(a,feedback):
     final_response = generate_final_response_with_llama(refined_query, retrieved_info, llm_result, feedback)
 
     # Display the results
-    print(llm_result)
-    print("=====================================================")
-    print(f"Refined Query: {refined_query}")
-    print("-----------------------------------------------------")
-    print(f"Final Response:\n{final_response}")
-    print("=====================================================")
+    # print(llm_result)
+    # print("=====================================================")
+    # print(f"Refined Query: {refined_query}")
+    # print("-----------------------------------------------------")
+    # print(f"Final Response:\n{final_response}")
+    # print("=====================================================")
     return final_response
 
 
