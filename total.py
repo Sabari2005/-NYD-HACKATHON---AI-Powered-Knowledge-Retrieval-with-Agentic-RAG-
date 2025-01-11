@@ -3,6 +3,8 @@ from pinecone import Pinecone, ServerlessSpec
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 from groq import Groq
+
+
 # Initialize Pinecone
 
 pc = Pinecone(api_key="pcsk_6E9B6o_DHFJaybC7zzr4QT9i1tZo1vExTxji5j1syULud17p1HXAzrZPN7Zv4fs9H83L98")  # Replace with your Pinecone API key
@@ -63,7 +65,6 @@ def answer_query_from_llama(query):
     return chat_completion.choices[0].message.content
 
 # Llama Query Refinement
-# Llama Query Refinement
 def refine_query_with_llama(query, retrieved_info):
     chat_completion = client.chat.completions.create(
         messages=[
@@ -82,7 +83,7 @@ def refine_query_with_llama(query, retrieved_info):
     return chat_completion.choices[0].message.content.strip()
 
 # Llama Final Response Generation
-# Llama Final Response Generation
+
 def feedback_loop():
   question = ""
   answer = ""
@@ -119,7 +120,7 @@ def main_total(a,feedback):
 
     feedback = feedback
 
-    # Step 1: Retrieve answer from Pinecone
+    # Retrieve answer from Pinecone
     semantic_results = retrieve_answer(user_query, top_k=3)
 
     retrieved_info = "\n".join([
@@ -127,22 +128,15 @@ def main_total(a,feedback):
         for item in semantic_results
     ])
 
-    # Step 2: Retrieve answer from Llama
+    # Retrieve answer from Llama
     llm_result = answer_query_from_llama(user_query)
 
-    # Step 3: Refine the query with Llama
+    # Refine the query with Llama
     refined_query = refine_query_with_llama(user_query, retrieved_info)
 
-    # Step 4: Generate final response using Llama
+    # Generate final response using Llama
     final_response = generate_final_response_with_llama(refined_query, retrieved_info, llm_result, feedback)
 
-    # Display the results
-    # print(llm_result)
-    # print("=====================================================")
-    # print(f"Refined Query: {refined_query}")
-    # print("-----------------------------------------------------")
-    # print(f"Final Response:\n{final_response}")
-    # print("=====================================================")
     return final_response
 
 
