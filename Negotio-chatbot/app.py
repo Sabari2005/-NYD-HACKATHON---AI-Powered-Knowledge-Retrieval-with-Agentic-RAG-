@@ -7,9 +7,8 @@ from passlib.context import CryptContext
 import uvicorn
 import os
 from fastapi import Cookie
-import jwt
 import time
-from total import main_total
+from model import main_total
 from typing import Dict
 import sqlite3
 app = FastAPI()
@@ -44,7 +43,6 @@ def create_tables():
     conn.commit()
     conn.close()
     print("database created")
-
 def drop_all_tables():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -58,8 +56,6 @@ def drop_all_tables():
     conn.commit()
     conn.close()
     print("All tables have been dropped from the database.")
-
-
 # Helper function to get a database connection
 def get_db_connection():
     conn = sqlite3.connect("chat.db")
@@ -69,7 +65,6 @@ def feedback_loop(q,a):
   if (q=="")and(a==""):
       return ""
   else:
-    print("entering feedback loop")
     question =q
     answer = a
     loop_template = f" This the previous question asked by the user :\n {question}\n\  answer:\n0{answer}\n.\n If the it is useful make use of it ,it is helpful in know the state of the user what they try to ask.\n"
@@ -111,8 +106,6 @@ def settingChatid(current_chat_id):
     return get_chats(current_chat_id)
     # last_chat_id = current_chat_id
 
-
-
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
@@ -125,18 +118,18 @@ app.add_middleware(
 
 # Mock database for storing users
 USERS = {
-    "admin@gmail.com": pwd_context.hash("admin")  # Example admin user
+    "codeblenders@gmail.com": pwd_context.hash("admin")  # Example admin user
 }
 
 # Routes
 @app.get("/", response_class=HTMLResponse)
 async def login_page(request: Request):
-    """Serve the login page."""
+    """login page."""
     return templates.TemplateResponse("login.html", {"request": request})
 
 @app.get("/signup", response_class=HTMLResponse)
 async def signup_page(request: Request):
-    """Serve the sign-up page."""
+    """sign-up page."""
     return templates.TemplateResponse("signup.html", {"request": request})
 
 @app.post("/api/signup", response_class=JSONResponse)
@@ -167,14 +160,13 @@ async def login(request: Request):
     password = data.get("password")
 
     if email in USERS and pwd_context.verify(password, USERS[email]):
-        # Placeholder for JWT token generation (replace with actual logic)
-        token = "secure_jwt_token_example"
+        token = "secure-token"
         response = JSONResponse(content={"redirect_url": "/logged", "token": token})
         response.set_cookie(
             key="token",
             value=token,
             httponly=True,
-            secure=False,  # Use True in production with HTTPS
+            secure=False, 
             samesite="Lax"
         )
         return response
@@ -184,14 +176,9 @@ async def login(request: Request):
 @app.get("/logged", response_class=HTMLResponse)
 async def logged_page(request: Request, token: str = Cookie(None)):
     """Serve the logged-in page only if the user is authenticated."""
-    if not token or token != "secure_jwt_token_example":  # Replace with actual token validation
+    if not token or token != "secure-token": 
         return templates.TemplateResponse("login.html", {"request": request, "error": "Unauthorized access."})
-    drop_all_tables()
-    create_tables()
     return templates.TemplateResponse("index.html", {"request": request})
-
-
-
 
 # Create a new chat and return its ID
 @app.post("/new_chat/")
@@ -236,8 +223,6 @@ async def add_message(chat_id: int, message: Dict[str, str]):
     )
     conn.commit()
     conn.close()
-
-
     return {"status": "Message added successfully"}
 
 @app.get("/recents/")
@@ -252,8 +237,6 @@ async def get_recents():
     """
     result = conn.execute(query).fetchall()
     conn.close()
-
-    # Grouping messages under each chat
     chats = {}
     for row in result:
         chat_id = row["chat_id"]
@@ -270,10 +253,6 @@ async def get_recents():
 
     # Convert chats dict to a list for the response
     return {"chats": list(chats.values())}
-
-
-# last_chat_id = None
-
 
 # Retrieve all messages for a specific chat
 @app.get("/get_chat_messages/{chat_id}/")
@@ -307,7 +286,7 @@ async def delete_chat(chat_id: int):
         return {"message": f"chat_id {chat_id} deleted successfully from both tables."}
 
     except Exception as e:
-        # Rollback the transaction in case of an error
+        # Rollback the transaction 
         conn.rollback()
         conn.close()
 
@@ -316,4 +295,6 @@ async def delete_chat(chat_id: int):
 
 
 if __name__ == "__main__":
+    drop_all_tables()
+    create_tables()
     uvicorn.run(app, host="127.0.0.1", port=8000)

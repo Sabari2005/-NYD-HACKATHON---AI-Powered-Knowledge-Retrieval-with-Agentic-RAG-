@@ -1,0 +1,131 @@
+## NYD HACKATHON CHALLENGE
+
+### **NEGOTIO AI** - A chatbot for patanjali yoga sutra's and bagavad gita 
+
+## Table of contents
+
+- [Overview](#overview)
+- [About Negotio](#)
+  - [Process flow](#)
+- [Architecture Diagram](#my-process)
+- [Installation](#installation)
+- [website overview](#)
+- [Author](#author)
+
+
+## Overview
+- This is a solution to the [The NYD Hackathon](https://unstop.com/hackathons/the-nyd-hackathon-2025-the-yoga-vivek-group-1281825). 
+
+- Our goal was to create a Retrieval-Augmented Generation (RAG) system capable of answering user queries based on the Bhagavad Gita and Patanjali Yoga Sutra datasets. The system integrates advanced AI technologies for efficient information retrieval and response generation.
+
+## Introducing **NEGOTIO AI** 
+    
+  - Get expert guidance powered by AI Negotio specializing in Yoga Bhagavad Gita, and Negotiation. Know your sologa that suits your needs and start your conversation with ease.
+
+  ### Process Flow
+
+  #### User Login:
+  - The user accesses the login page of the website.
+  - The user inputs their email and password.
+  - Upon successful login, the user is granted access to the main page of the website, where they can interact with the chatbot.
+
+  #### Main Page Interaction:
+  - The main page displays a chat interface powered by the **Negotio AI** chatbot.
+  - The user is presented with the option to start a conversation with the chatbot, specializing in the Bhagavad Gita and Patanjali Yoga Sutras.
+  - Users can enter questions or requests related to the teachings of the Bhagavad Gita, Yoga Sutras, or negotiation.
+
+  #### Database Initialization
+  - Upon starting the application, tables chats and messages are created in the SQLite database
+  - The chats table stores individual chat sessions.
+The messages table **stores messages** related to each chat.
+
+
+  #### User Query Processing:
+  - The user’s input is sent to the backend, where **FastAPI** handles the request.
+  - The **Negotio AI model** (via `model.py`) processes the query using a **Agentic Retrieval-Augmented Generation (RAG)** system.
+  - The Agentic RAG model retrieves relevant information from the Bhagavad Gita and Yoga Sutra datasets.
+
+  #### Response Generation:
+  - The model generates a context-aware response based on the retrieved information.
+  - The response is sent back to the frontend, where it is displayed to the user as part of the conversation.
+
+  #### Feedback Loop:
+  - The system fetches previous questions and answers from the database using feedback loop.
+  - The feedback loop helps refine the context and improve future answers by considering past user interactions.
+
+  #### Additional Interaction:
+  - The user can continue the conversation by asking more questions or clarifying points.
+  - The chatbot provides answers, explanations, and insights, focusing on the wisdom of the Bhagavad Gita, Yoga Sutras, and negotiation principles.
+
+  #### Model Processing:
+  - Additionally, the backend allows execution of the AI model to intract with user.
+  - This model handles the retrieval and response generation mechanism for all user interactions.
+
+  #### User Feedback:
+  - Users can interact further with the AI by refining their queries and exploring additional details on the Bhagavad Gita and Yoga Sutras.
+
+
+## Architecture Diagram
+
+
+## Built with
+
+- ### Frontend:
+  - HTML, CSS, JS
+
+- ### Backend:
+  - FastAPI
+  - Python
+
+- ### Libraries
+  - `numpy`, `pandas` for data handling
+  - `uvicorn` for FastAPI
+  - `PyTorch` For loading, fine-tuning, and deploying the Llama
+3.2 models (text and vision)
+
+## Website Overview
+<img src="../assets/login.png">
+<img src="../assets/main_page.png">
+<img src="../assets/content1.png">
+<img src="../assets/content2.png">
+
+
+## Demo 
+
+- Click [here](./assets/videos/demo.mp4) to see the demo video
+
+
+## Installation
+
+### Prerequirements
+  - `python3.11`
+
+### Installation steps
+
+  ```
+    git clone https://github.com/Sabari2005/Hackthon_NYD.git
+    cd Hackthon_NYD
+    cd Negotio-chatbot
+  ```
+  ```
+    pip install -r requirements.txt
+  ```
+
+  ```
+  python app.py
+
+  ```
+  - Open ` http://127.0.0.1:8000` in your browser
+  
+  - **Login Credentials**
+
+  ```
+  E-Mail: codeblenders@gmail.com
+  Password: admin
+  ``` 
+
+## Author
+
+- Sabari Vadivelan S (Team Leader) - Contact Gmail [sabari132005@gmail.com]()
+- Uvarajan D (Member 2)
+

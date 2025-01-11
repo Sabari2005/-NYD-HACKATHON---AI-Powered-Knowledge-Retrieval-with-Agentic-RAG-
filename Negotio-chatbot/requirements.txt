@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+jinja2
+passlib[bcrypt]
+pandas
+sentence-transformers
+pinecone-client
+groq
+sqlite3

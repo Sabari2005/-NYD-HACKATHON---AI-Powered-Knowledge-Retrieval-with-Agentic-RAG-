@@ -295,7 +295,7 @@ function addTemplate(chat_id, question) {
             child.style.boxShadow = "none";
         });
         titleTemplate.classList.add("active");
-        titleTemplate.style.boxShadow = "0 0 5px rgb(101, 142, 255)";
+        titleTemplate.style.boxShadow = "0 0 5px #FFCB47";
     };
     if (window.chat_id === chat_id) {
         Array.from(titles.children).forEach((child) => {
@@ -303,7 +303,7 @@ function addTemplate(chat_id, question) {
             child.style.boxShadow = "none";
         });
         titleTemplate.classList.add("active");
-        titleTemplate.style.boxShadow = "0 0 5px rgb(101, 142, 255)";
+        titleTemplate.style.boxShadow = "0 0 5px #FFCB47";
     }
 
     titles.append(titleTemplate);
