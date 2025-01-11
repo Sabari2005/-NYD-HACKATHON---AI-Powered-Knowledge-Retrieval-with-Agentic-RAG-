@@ -3,7 +3,7 @@ from pinecone import Pinecone, ServerlessSpec
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 from groq import Groq
-
+import threading
 
 # Initialize Pinecone
 
@@ -113,11 +113,11 @@ def generate_final_response_with_llama(query, retrieved_info, llm_retrieved, fee
     return chat_completion.choices[0].message.content.strip()
 
  # Main workflow
-def main_total(a,feedback):
-   
+
+
+def main_total(a, feedback):
     # Main workflow
     user_query = a
-
     feedback = feedback
 
     # Retrieve answer from Pinecone
@@ -128,11 +128,30 @@ def main_total(a,feedback):
         for item in semantic_results
     ])
 
-    # Retrieve answer from Llama
-    llm_result = answer_query_from_llama(user_query)
+    # Variables to store results
+    llm_result = None
+    refined_query = None
 
-    # Refine the query with Llama
-    refined_query = refine_query_with_llama(user_query, retrieved_info)
+    # Define functions to execute
+    def run_answer_query():
+        nonlocal llm_result
+        llm_result = answer_query_from_llama(user_query)
+
+    def run_refine_query():
+        nonlocal refined_query
+        refined_query = refine_query_with_llama(user_query, retrieved_info)
+
+    # Create threads
+    thread1 = threading.Thread(target=run_answer_query)
+    thread2 = threading.Thread(target=run_refine_query)
+
+    # Start threads
+    thread1.start()
+    thread2.start()
+
+    # Wait for threads to complete
+    thread1.join()
+    thread2.join()
 
     # Generate final response using Llama
     final_response = generate_final_response_with_llama(refined_query, retrieved_info, llm_result, feedback)

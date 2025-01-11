@@ -173,41 +173,33 @@ function formatTextWithGaps(text) {
 function displayMessages(messages) {
     console.log(messages);
     msgContain.innerHTML = "";
-    // introTemplate.style.display="none";
-
-    // Iterate over the messages array and create message elements
     messages.forEach((message) => {
-        // Create the send (question) container
         const sendDiv = document.createElement("div");
         sendDiv.classList.add("send");
 
         const sendSpan = document.createElement("span");
-        sendSpan.textContent = message.question; // Add the question text
+        sendSpan.textContent = message.question; 
 
         const sendImg = document.createElement("img");
-        sendImg.src = "../static/img/user.png"; // User image
+        sendImg.src = "../static/img/user.png";
 
         sendDiv.appendChild(sendSpan);
         sendDiv.appendChild(sendImg);
-
-        // Create the receive (answer) container
         const receiveDiv = document.createElement("div");
         receiveDiv.classList.add("receive");
 
         const receiveImg = document.createElement("img");
-        receiveImg.src = "../static/img/spark.png"; // Spark image
+        receiveImg.src = "../static/img/spark.png"; 
         receiveImg.style.animationName="none";
         const receiveInnerDiv = document.createElement("div");
         receiveInnerDiv.classList.add("receive_div");
 
         const receiveSpan = document.createElement("span");
-        receiveSpan.innerHTML = formatTextWithGaps(message.answer); // Add the answer text
+        receiveSpan.innerHTML = formatTextWithGaps(message.answer);
 
         receiveInnerDiv.appendChild(receiveSpan);
         receiveDiv.appendChild(receiveImg);
         receiveDiv.appendChild(receiveInnerDiv);
-
-        // Append the send and receive containers to the main container
         msgContain.appendChild(sendDiv);
         msgContain.appendChild(receiveDiv);
     });
@@ -221,10 +213,8 @@ function displayMessages(messages) {
 
 function addTemplate(chat_id, question) {
     console.log(`Attempting to create template for chat_id: ${chat_id}`);
-
-    // Check if an element with the same chat_id is already present
     const existingTemplate = Array.from(titles.children).find((child) => {
-        return child.getAttribute("data-chat-id") === String(chat_id); // Compare chat_id
+        return child.getAttribute("data-chat-id") === String(chat_id);
     });
 
     if (existingTemplate) {
@@ -248,15 +238,11 @@ function addTemplate(chat_id, question) {
 
     titleDiv.appendChild(titleDivImg);
     titleDiv.appendChild(titleDivSpan);
-
-    // Create the delete button with tooltip
     const deleteDiv = document.createElement("div");
     deleteDiv.classList.add("delete-btn");
 
     const deleteImg = document.createElement("img");
     deleteImg.src = "../static/img/delete.png";
-
-    // Tooltip element
     const tooltip = document.createElement("div");
     tooltip.textContent = "Delete";
     tooltip.classList.add("tooltip");
@@ -264,34 +250,28 @@ function addTemplate(chat_id, question) {
     deleteDiv.appendChild(deleteImg);
     deleteDiv.appendChild(tooltip);
 
-    // Delete button click logic
     deleteDiv.addEventListener("click", async (e) => {
-        e.stopPropagation(); // Prevent triggering the outside click handler
+        e.stopPropagation();
 
         const confirmed = confirm(`Are you sure you want to delete this chat?`);
         if (!confirmed) return;
 
         try {
-            // Attempt to delete from the database
             new_chat.disabled = true;
 
             const response = await fetch(`/delete_chat/${chat_id}/`, { method: "DELETE" });
 
             if (response.ok) {
                 console.log(`chat_id ${chat_id} deleted successfully from the database.`);
-
-                // Remove the template from the UI
                 titleTemplate.remove();
-
-                // Handle remaining templates
                 const remainingTemplates = Array.from(titles.children);
                 if (remainingTemplates.length > 0) {
                     const lastTemplate = remainingTemplates[remainingTemplates.length - 1];
-                    lastTemplate.click(); // Auto-select last template
+                    lastTemplate.click();
                     new_chat.disabled = true;
                 } else {
                     console.log("No templates remaining.");
-                    createNewChat(); // Reset to default state
+                    createNewChat();
                 }
             } else {
                 console.error(`Failed to delete chat_id ${chat_id} from the database.`);
@@ -305,26 +285,18 @@ function addTemplate(chat_id, question) {
 
     titleTemplate.appendChild(titleDiv);
     titleTemplate.appendChild(deleteDiv);
-
-    // Click logic for the template button
     titleTemplate.onclick = () => {
         console.log(`Clicked on template for chat_id: ${chat_id}`);
-        window.chat_id = chat_id; // Update the global chat_id
-        setId(); // Ensure the current chat ID is updated
-        getChatMessages(chat_id); // Fetch and display messages for this chat
-
-        // Remove the active class from all templates
+        window.chat_id = chat_id;
+        setId(); 
+        getChatMessages(chat_id); 
         Array.from(titles.children).forEach((child) => {
             child.classList.remove("active");
             child.style.boxShadow = "none";
         });
-
-        // Add the active class to the clicked template
         titleTemplate.classList.add("active");
         titleTemplate.style.boxShadow = "0 0 5px rgb(101, 142, 255)";
     };
-
-    // Check if this is the active chat and apply styles
     if (window.chat_id === chat_id) {
         Array.from(titles.children).forEach((child) => {
             child.classList.remove("active");
@@ -356,8 +328,8 @@ async function getChatMessages(chat_id) {
             button.disabled = true;
           });
           dotsBtn.forEach((btn) => {
-            btn.style.pointerEvents = "none";  // Prevent interactions
-            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+            btn.style.pointerEvents = "none"; 
+            btn.style.opacity = "0.5";     
         });
         textField.disabled=true;
         const response = await fetch(`/get_chat_messages/${chat_id}/`, {
@@ -376,8 +348,8 @@ async function getChatMessages(chat_id) {
                 button.disabled = false;
               });
               dotsBtn.forEach((btn) => {
-                btn.style.pointerEvents = "auto";  // Prevent interactions
-                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+                btn.style.pointerEvents = "auto";  
+                btn.style.opacity = "1";         
             });
               textField.disabled=false;
               
@@ -405,8 +377,8 @@ async function createNewChat() {
             button.disabled = true;
           });   
           dotsBtn.forEach((btn) => {
-            btn.style.pointerEvents = "none";  // Prevent interactions
-            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+            btn.style.pointerEvents = "none"; 
+            btn.style.opacity = "0.5";         
         });      
         const response = await fetch('/new_chat/', {
             method: 'POST',
@@ -418,15 +390,15 @@ async function createNewChat() {
         const data = await response.json();
         if (response.ok) {
             console.log("New Chat Created:", data.chat_id);
-            window.chat_id = data.chat_id; // Update global chat_id
-            setId(); // Update active chat ID
+            window.chat_id = data.chat_id;
+            setId(); 
             new_chat.disabled = true;
             titleTemplateButtons.forEach(button => {
                 button.disabled = false;
               });
               dotsBtn.forEach((btn) => {
-                btn.style.pointerEvents = "aotu";  // Prevent interactions
-                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+                btn.style.pointerEvents = "aotu"; 
+                btn.style.opacity = "1";       
             });
             return data.chat_id;
         } else {
@@ -439,7 +411,7 @@ async function createNewChat() {
         alert("cannot communicate with server. website will be reloaded shortly to resolve this error or try restarting the server")
         location.reload();
     }
-    return null; // Return null if chat creation fails
+    return null; 
 }
 async function sendMessage(chat_id, question) {
     const message = { question: question };
@@ -490,8 +462,8 @@ async function sendMessage(chat_id, question) {
             button.disabled = true;
           });
           dotsBtn.forEach((btn) => {
-            btn.style.pointerEvents = "none";  // Prevent interactions
-            btn.style.opacity = "0.5";         // Optional: visually indicate it's disabled
+            btn.style.pointerEvents = "none";
+            btn.style.opacity = "0.5";  
         });
         const response = await fetch(`/add_message/${chat_id}/`, {
             method: 'POST',
@@ -511,8 +483,8 @@ async function sendMessage(chat_id, question) {
                 button.disabled = false;
               });
               dotsBtn.forEach((btn) => {
-                btn.style.pointerEvents = "none";  // Prevent interactions
-                btn.style.opacity = "1";         // Optional: visually indicate it's disabled
+                btn.style.pointerEvents = "none";  
+                btn.style.opacity = "1";        
             });
         } else {
             console.error("Error adding message:", data.detail);
@@ -520,7 +492,6 @@ async function sendMessage(chat_id, question) {
             introDefault();
             resetui();
             location.reload();
-            // createNewChat();
         }
     } catch (error) {
         console.error("Error:", error);
@@ -528,9 +499,6 @@ async function sendMessage(chat_id, question) {
         introDefault();
         resetui();
         location.reload();
-
-        
-        // createNewChat();
     }
 }
 
@@ -541,8 +509,6 @@ function setId() {
 
 
 async function sendTemplateText(a){
-    // textField.value=a;
-    // totalSubmit.click();
     if (window.chat_id) {
         console.log(`Sending message to chat_id: ${window.chat_id}`);
         textField.value = "";
@@ -579,14 +545,9 @@ generalPanel.addEventListener("click",()=>{
                 console.log("nav shrinked");
                 navBar.style.top = "10px";
             }
-        // }
-    // }
     
 });
-// voicePanel.addEventListener("click",()=>{
-//     console.log("voice");
-//     resetui();
-// });
+
 aboutPanel.addEventListener("click",()=>{
     console.log("about");
     resetui();
@@ -597,7 +558,7 @@ contactUsPanel.addEventListener("click",()=>{
     resetui();
     closeSideBtn.click();
 });
-let isListening = false; // Define isListening globally
+let isListening = false; 
 
 const voiceButton = document.getElementById("voice");
 const micIcon = document.getElementById("micIcon");
@@ -605,12 +566,8 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 
 if (SpeechRecognition) {
     const recognition = new SpeechRecognition();
-
-    // Set Speech Recognition properties
-    recognition.lang = "en-US"; // Set language
-    recognition.continuous = true; // Continue listening for speech
-
-    // Event when the button is clicked
+    recognition.lang = "en-US"; 
+    recognition.continuous = true;
     voiceButton.addEventListener("click", () => {
         if (!isListening) {
             recognition.start();
@@ -622,8 +579,6 @@ if (SpeechRecognition) {
             micIcon.src = "../static/img/mic.png";
         }
     });
-
-    // Capture speech and write to input field
     recognition.onresult = (event) => {
         let transcript = "";
         for (let i = 0; i < event.results.length; i++) {
@@ -631,8 +586,6 @@ if (SpeechRecognition) {
         }
         textField.value = transcript;
     };
-
-    // Handle errors
     recognition.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
         recognition.stop();
@@ -640,14 +593,11 @@ if (SpeechRecognition) {
         micIcon.src = "../static/img/mic.png";
     };
 } else {
-    // Fallback for browsers without Speech Recognition support
     console.warn("Speech Recognition API is not supported in this browser.");
     voiceButton.addEventListener("click", () => {
         alert("Speech recognition is not supported in your browser. Please use Chrome or Edge.");
     });
 }
-
-// Event listeners for sending messages
 textField.addEventListener("keydown", async function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
