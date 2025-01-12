@@ -7,7 +7,6 @@
 - [About RAG Implmentation](#about-rag-implementation)
 - [Built with](#built-with)
 - [Installation](#installation)
-- [Project structure](#structure)
 - [Result Analysis](#resultanalysis)
 - [Feature](#features)
 - [Author](#author)
@@ -16,35 +15,118 @@
 ## Overview
 - This is a solution to the [The NYD Hackathon](https://unstop.com/hackathons/the-nyd-hackathon-2025-the-yoga-vivek-group-1281825). 
 
-- Our goal was to create a Retrieval-Augmented Generation (RAG) system capable of answering user queries based on the Bhagavad Gita and Patanjali Yoga Sutra datasets. The system integrates advanced AI technologies for efficient information retrieval and response generation.
+- Our model is a **Agentic Retrieval-Augmented Generation (RAG) system**, designed to provide contextual and insightful responses from the Bhagavad Gita and Patanjali Yoga Sutra datasets. Leveraging a multi-agent architecture, it integrates semantic search using Pinecone with advanced natural language generation powered by the Llama 3.3 model through the Ollama API. The system includes a feedback loop to maintain conversational coherence, ensuring continuity and accuracy in responses. Optimized for efficiency and scalability, the model combines cutting-edge AI with a user-centric design to deliver an engaging and meaningful learning experience.
 
 ## Architecture Diagram
- ### RAG Pipeline
 
-<img src="./assets/img/architecture.png">
+<img src="../assets/rag_archi.jpg">
 
+---
 
+## Detailed Explanation of the RAG Pipeline
 
+  ### 1. User Query (Input Stage)
+  - **Description**: The pipeline begins with the user submitting a query (e.g., a question or request for specific information).
+  - **Purpose**: This serves as the input to initiate the retrieval and generation process.
+  - **Example**: A user might ask, "Who was the king from Kashi who fought in the Mahabharata war?"
 
-## About RAG Pipeline Implementation
+  ---
+
+  ### 2. The Agent (Central Orchestrator)
+  - **Description**: The agent acts as the core controller of the RAG pipeline. It is responsible for interpreting the user query and coordinating between various components.
+  - **Key Responsibilities**:
+    - Directs the query to the relevant modules, such as the vector store or database.
+    - Retrieves relevant context or data.
+    - Sends the context and query to the LLM for generating responses.
+  - **Advantage**: Ensures modularity and flexibility in query processing.
+
+  ---
+
+  ### 3. Embedding Model and Vector Store
+  #### a. Embedding Model
+  - **Description**: Converts raw datasets into dense vector representations using a Sentence embeddings.
+  - **Process**:
+    - Each dataset entry (e.g., documents, judgments, or text files) is embedded into a high-dimensional vector space.
+    - These embeddings capture the semantic meaning of the text, making it easier to perform similarity searches.
+  - **Tools**: sentence transformer
+
+  #### b. Vector Store
+  - **Description**: A database that stores vector embeddings of the datasets, optimized for similarity search.
+  - **Purpose**: Enables fast retrieval of semantically similar data points.
+  - **Process**:
+    - When the user’s query is embedded into a vector, the vector store is queried for the closest matches.
+    - Returns the most relevant pieces of information
+  - **Tools**: Pinecone.
+
+  ---
+
+  ### 4. Query Optimization and Prioritization
+  - **Description**: Before searching the vector store or database, the agent enhances the user query to ensure it retrieves the most accurate and relevant data.
+  - **Mechanisms**:
+    - **Optimization**: Reformulating the query to match the vocabulary and structure of the stored data.
+    - **Prioritization**: Ranking the query results based on relevance, confidence scores, or user preferences.
+  - **Benefit**: Reduces ambiguity and improves retrieval accuracy.
+
+  ---
+
+  ### 5. Database Search (Structured Data Retrieval)
+  - **Description**: In addition to retrieving data from the vector store, the agent queries structured databases for supplementary information.
+  - **Integration**: The results from the database are combined with those retrieved from the vector store to provide comprehensive context.
+
+  ---
+
+  ### 6. Large Language Model (LLM)
+  - **Description**: The retrieved data is sent to the LLM, along with the original user query. The LLM processes this input to generate a natural language response.
+  - **Key Features**:
+    - **Contextual Understanding**: Incorporates retrieved data to generate accurate and context-aware responses.
+    - **Natural Language Generation**: Creates human-like, coherent, and informative replies.
+  - **Example**: If the retrieved data contains legal judgments, the LLM can synthesize a summary or explanation.
+  - **Tools**: Ollama (llama 3.3)
+
+  ---
+
+  ### 7. Feedback Loop (Continuous Improvement)
+  - **Description**: A feedback mechanism allows the system to iteratively refine its responses based on user validation or additional input.
+  - **Process**:
+    - The user reviews the generated response and provides feedback
+    - The feedback is incorporated into future responses to improve accuracy and user satisfaction.
+  - **Advantage**: Ensures that the system adapts over time and learns from errors or user preferences.
+
+  ---
+
+  ### 8. Response Delivery
+  - **Description**: The agent delivers the final response to the user in a user-friendly format 
+  - **Purpose**: To ensure that the output is both actionable and easy to understand.
+
+  ---
+
+  ### 9. Datasets and Model Integration
+  #### Datasets:
+  - The pipeline is powered by diverse datasets, including  case histories, and domain-specific knowledge.
+  - These datasets are pre-processed, embedded, and stored for retrieval.
+
+  #### Models:
+  - The embedding model creates the vector representations.
+  - The LLM processes queries and retrieved data for natural language generation.
+  - Auxiliary models, if any, can assist in specific tasks like sentiment analysis, keyword extraction, or multi-modal understanding.
+
+  ---
+
+  ### Advantages of This RAG Pipeline
+  1. **Efficient Retrieval**: Combines structured and unstructured data retrieval for comprehensive responses.
+  2. **Dynamic Query Handling**: Handles both ambiguous and specific queries through query optimization.
+  3. **Scalability**: Modular design allows easy integration of new datasets, models, or features.
+  4. **Continuous Learning**: Feedback loop ensures the system improves over time.
+  5. **User-Centric Design**: Delivers precise, contextually relevant, and actionable responses.
 
 
 
 ## Built with
-
-- ### Frontend:
-  - HTML, CSS, JS
-
-- ### Backend:
-  - FastAPI
-  - Python
-  - spaCy/NLTK
-
-- ### Libraries
-  - `numpy`, `pandas` for data handling
-  - `uvicorn` for FastAPI
-  - `PyTorch` For loading, fine-tuning, and deploying the Llama
-3.2 models (text and vision)
+- `Programming Languages`: Python, JavaScript
+- `Machine Learning Models`: Llama 3.3 70B, MiniLM, Ollama API
+- `Vector Database`: Pinecone
+- `Tools`: SQLite3, 
+- `Development Environment`: Local inference setup, API integration, multi-agent RAG pipeline
 
 ## Installation
 
@@ -56,77 +138,20 @@
   ```
     git clone https://github.com/Sabari2005/Hackthon_NYD.git
     cd Hackthon_NYD
+    cd model
   ```
   ```
-    pip install -r requirements.txt
+  run all the cells in the rag.ipynb
   ```
-
-  - Execute each commands in a seperate terminal
-
-  ```
-  python app.py
-  python model_api_endpoint.py
-
-  ```
-  - Open ` http://127.0.0.1:8000` in your browser
-  
-  - **Login Credentials**
-
-  ```
-  E-Mail: codeblenders@gmail.com
-  Password: codeblenders
-  ``` 
-
-  - To run the model seperately
-
-  ```
-    python model.py
-  ``` 
+  - the rag.ipynb has the detailed steps and provides the output as a `JSON`   format and saved in the `output_folder`
 
 
-## Project structure
+## Testing and Results
 
-```
-├──          
-├── static
-│   ├── css 
-│   │   ├── index.css      
-│   │   ├── login.css
-│   │   └── signup.css 
-│   ├─js
-│   │   ├── index.js      
-│   │   ├── login.js
-│   │   └── signup.js 
-│   └── images                 
-├── templates
-│   ├── index.html      
-│   ├── login.html
-│   └── signup.html           
-├── app.py   
-├── model_api_endpoint.py
-├── model.py
-├── ollama_highend.ipynb
-├── combined_file.csv                           
-├── requirements.txt           
-└── README.md                  
-```
-## Result Analysis
-
-- ### Crowd Counting 
-    ![](assets/img/f1.jpg) 
-    ![](assets/img/p_curve.jpg)
-
-
-## Features
- ### Introducing **NEGOTIO AI** 
-    
-  - Get expert guidance powered by AI Negotio specializing in Yoga Bhagavad Gita, and Negotiation. Know your sologa that suits your needs and start your conversation with ease.
-
-  ### Website Overview
-<img src="./assets/login.png">
-<img src="./assets/main_page.png">
-<img src="./assets/content1.png">
-<img src="./assets/content2.png">
+- For Bhagavad Gita, we tested approximately 18 questions, and for Patanjali Yoga Sutras, we tested around 28 questions, totally **46 questions**.  
+- Our model provided literally correct answers for every question tested, demonstrating its accuracy and reliability.
+- our test question is given in the `bagavad_gita_test_question.csv` and `Patanjali_test_question.csv` 
+- the output for each test is saved as a JSON file inside the **bagavadgita** and **yogasutra** folder
 
 
 ## Demo 
