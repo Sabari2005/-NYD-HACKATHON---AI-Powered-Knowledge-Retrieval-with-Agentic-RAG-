@@ -1,4 +1,4 @@
-## NYD HACKATHON CHALLENGE
+## "NYD HACKATHON - AI-Powered Knowledge Retrieval with Agentic RAG"
 
 ## Table of contents
 
@@ -137,8 +137,8 @@
 ### Installation steps
 
   ```
-    git clone https://github.com/Sabari2005/Hackthon_NYD.git
-    cd Hackthon_NYD
+    https://github.com/Sabari2005/NYD_Hackathon.git
+    NYD_Hackathon
     cd model
   ```
   ```

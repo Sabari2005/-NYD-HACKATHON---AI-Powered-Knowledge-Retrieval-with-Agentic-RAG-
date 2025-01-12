@@ -1,4 +1,4 @@
-## NYD HACKATHON CHALLENGE:  AI-Powered Wisdom Extraction from the Bhagavad Gita and Yoga Sutras
+## "NYD HACKATHON - AI-Powered Knowledge Retrieval with Agentic RAG"
 
 
 #### Solution by **CODE BLENDERS**

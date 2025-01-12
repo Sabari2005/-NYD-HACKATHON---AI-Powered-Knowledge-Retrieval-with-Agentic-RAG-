@@ -1,4 +1,4 @@
-## NYD HACKATHON CHALLENGE
+## "NYD HACKATHON - AI-Powered Knowledge Retrieval with Agentic RAG"
 
 ### **NEGOTIO** - A RAG implemented website for patanjali yoga sutra's and bagavad gita 
 
