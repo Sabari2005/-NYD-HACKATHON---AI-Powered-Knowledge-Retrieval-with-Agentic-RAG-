@@ -157,10 +157,10 @@
 ## Screenshots
 <img src="../assets/pinecone.png">
 
-## Offline RAG model
+## Offline implementation of RAG using Ollama 
 
-- In the `rag2Ollama.ipynb` file we have implemented the **offline ollama model** for our Agentic Rag pipeline 
-- But this model requires High end GPU because the Ollama offline model is **high gpu intensive model**
+- In the `rag2Ollama.ipynb` file we have implemented the **offline llama 3.3 70b model** for our Agentic Rag pipeline 
+- But this model requires High end GPU because the llama offline model is **high gpu intensive model**
 - this implementation gives us more faster responses than a api endpoint   
 
 ### Installation Steps 
