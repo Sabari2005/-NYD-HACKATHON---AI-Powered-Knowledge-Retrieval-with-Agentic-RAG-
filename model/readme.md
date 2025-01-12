@@ -154,6 +154,47 @@
 - our test question is given in the `bagavad_gita_test_question.csv` and `Patanjali_test_question.csv` 
 - the output for each test is saved as a JSON file inside the **bagavadgita** and **yogasutra** folder
 
+## Performance Metrics for the System
+
+### Response Time (Latency)
+- **Target**: < 1 second for semantic search and query refinement.
+- **Breakdown**:
+  - **Pinecone Retrieval**: ≤ 300ms for embedding search and metadata extraction.
+  - **Llama Response Generation**: ≤ 500ms for query refinement and response creation.
+  - **Feedback Loop Integration**: ≤ 200ms.
+
+### Accuracy
+- **Query Retrieval (Pinecone)**: ≥ 95% of queries should return relevant results in the top 3 matches.
+- **Final Response (Llama)**: ≥ 95% of responses should provide correct information from the Bhagavad Gita or Patanjali Yoga Sutra.
+- **Refinement Impact**: Refined queries should improve retrieval accuracy by at least 10% compared to raw queries.
+
+### User Satisfaction
+- **Target**: ≥ 90% positive feedback from users on the relevance and completeness of answers.
+- **Measurement**: Based on user ratings collected over a defined period (e.g., post-interaction surveys).
+
+### Hallucination Rate
+- **Target**: ≤ 2% of responses should include fabricated or irrelevant content.
+- **Measurement**: Manually evaluate a sample of 100 responses.
+
+### Completeness
+- **Target**: ≥ 98% of valid responses should include all expected elements (Book Name, Chapter, Verse, Sanskrit, and Detailed Explanation).
+
+### Query Refinement Impact
+- **Target**:
+  - Refined queries should improve **Recall@3** by ≥ 5% compared to unrefined queries.
+  - Retrieval speed should remain unaffected or increase by ≤ 10%.
+
+### End-to-End System Performance
+- **Latency**: Total time for query processing and response generation ≤ 1 second.
+- **Consistency**: ≥ 95% of similar queries should yield consistent answers.
+
+### Error Rate
+- **Target**: ≤ 2% of queries result in incomplete or incorrect answers.
+
+### Scalability
+- **Throughput**: System should handle ≥ 1000 concurrent queries without significant degradation in performance.
+
+
 ## Screenshots
 <img src="../assets/pinecone.png">
 
