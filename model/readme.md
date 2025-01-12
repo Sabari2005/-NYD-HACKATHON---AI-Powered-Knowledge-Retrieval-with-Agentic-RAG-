@@ -126,7 +126,7 @@
 - `Machine Learning Models`: Llama 3.3 70B, Ollama API
 - `Vector Database`: Pinecone
 - `Tools`: SQLite3
-- `Development Environment`: Local inference setup, API integration, multi-agent RAG pipeline.
+- `Development Environment`: Local inference setup, API integration, multi-agent Agentic RAG pipeline.
 
 
 ## Installation
