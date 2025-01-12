@@ -69,7 +69,6 @@ def feedback_loop(q,a):
     answer = a
     loop_template = f" This the previous question asked by the user :\n {question}\n\  answer:\n0{answer}\n.\n If the it is useful make use of it ,it is helpful in know the state of the user what they try to ask.\n"
     return loop_template
-
 def get_chats(chat_id):
     conn = get_db_connection()
     messages = conn.execute(
@@ -99,8 +98,6 @@ def get_chats(chat_id):
 
     conn.close()
     return feedback_loop(question,answer)
-
-
 def settingChatid(current_chat_id):
     # global last_chat_id
     return get_chats(current_chat_id)

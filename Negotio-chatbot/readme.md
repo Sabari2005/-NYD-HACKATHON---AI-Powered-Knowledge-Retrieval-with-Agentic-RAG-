@@ -10,6 +10,7 @@
 - [Architecture Diagram](#my-process)
 - [Installation](#installation)
 - [website overview](#)
+- [API service](#)
 - [Author](#author)
 
 
@@ -67,6 +68,7 @@ The messages table **stores messages** related to each chat.
 
 ## Architecture Diagram
 
+<img src="../assets/server_archi.png">
 
 ## Built with
 
@@ -123,6 +125,58 @@ The messages table **stores messages** related to each chat.
   E-Mail: codeblenders@gmail.com
   Password: admin
   ``` 
+
+## Providing API service
+
+The API is built using FastAPI and is designed to be easily integrated with websites or other applications. It includes endpoints for submitting queries and retrieving responses with semantic and AI-enhanced accuracy.
+
+### Installation
+
+#### Prerequirements
+  - `python3.11`
+
+#### Installation steps
+
+  ```
+    git clone https://github.com/Sabari2005/Hackthon_NYD.git
+    cd Hackthon_NYD
+    cd Negotio-chatbot
+  ```
+  ```
+    pip install -r requirements.txt
+  ```
+  - run the `api.py` to start the API/Endpoint 
+  ```
+  python api.py
+  ```
+  -  Now you can access our model using the api endpoint `127.0.0.2:8001/send-test`
+
+## Steps to access the endpoint using postman
+
+### 1. Setup Postman
+- Open Postman and create a new request.
+- Set the HTTP method to `POST`.
+
+### 2. Enter the URL
+- Enter the URL of your FastAPI server. If you are running the server locally on the default port, the URL would typically look like this:
+  `http://127.0.0.1:8000/send-text`
+
+### 3.Add Headers
+- Go to the `Headers` tab in Postman.
+- Add the following key-value pair to indicate the content type:
+    ```
+    Key: Content-Type
+    Value: application/json
+    ```
+
+### 4.Provide JSON Body
+- Go to the `Body` tab in Postman.
+- Select the `raw` option.
+- Enter a JSON object in the following format:
+
+    ```
+
+    ```
 
 ## Author
 
