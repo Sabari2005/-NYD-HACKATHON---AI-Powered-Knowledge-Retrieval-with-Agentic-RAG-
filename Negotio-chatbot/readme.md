@@ -164,6 +164,7 @@ The API is built using FastAPI and is designed to be easily integrated with webs
 ### 3.Add Headers
 - Go to the `Headers` tab in Postman.
 - Add the following key-value pair to indicate the content type:
+
     ```
     Key: Content-Type
     Value: application/json
@@ -175,8 +176,16 @@ The API is built using FastAPI and is designed to be easily integrated with webs
 - Enter a JSON object in the following format:
 
     ```
-
+    {
+      "text": "Your sample input text here"
+    }
     ```
+### Screenshots
+
+<img src="../assets/postman1.png">
+
+<img src="../assets/postman2.png">
+
 
 ## Author
 
