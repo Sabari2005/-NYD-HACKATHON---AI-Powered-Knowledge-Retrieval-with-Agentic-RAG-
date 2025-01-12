@@ -1,6 +1,6 @@
 ## NYD HACKATHON CHALLENGE
 
-### **NEGOTIO AI** - A chatbot for patanjali yoga sutra's and bagavad gita 
+### **NEGOTIO** - A RAG implemented website for patanjali yoga sutra's and bagavad gita 
 
 ## Table of contents
 
@@ -13,14 +13,10 @@
 - [API service](#)
 - [Author](#author)
 
+## Introducing **NEGOTIO** 
 
-## Overview
-- This is a solution to the [The NYD Hackathon](https://unstop.com/hackathons/the-nyd-hackathon-2025-the-yoga-vivek-group-1281825). 
+  - The name **Negotio** captures the essence of enlightening users with curated knowledge, reflecting the transformative journey they undertake. By tying the name to the philosophical ethos, the platform builds trust and authenticity, making it instantly recognizable in the niche it serves.
 
-- Our goal was to create a Retrieval-Augmented Generation (RAG) system capable of answering user queries based on the Bhagavad Gita and Patanjali Yoga Sutra datasets. The system integrates advanced AI technologies for efficient information retrieval and response generation.
-
-## Introducing **NEGOTIO AI** 
-    
   - Get expert guidance powered by AI Negotio specializing in Yoga Bhagavad Gita, and Negotiation. Know your sologa that suits your needs and start your conversation with ease.
 
 
@@ -32,8 +28,8 @@
   - Upon successful login, the user is granted access to the main page of the website, where they can interact with the chatbot.
 
   #### Main Page Interaction:
-  - The main page displays a chat interface powered by the **Negotio AI** chatbot.
-  - The user is presented with the option to start a conversation with the chatbot, specializing in the Bhagavad Gita and Patanjali Yoga Sutras.
+  - The main page displays a chat interface powered by the **Negotio**
+  - The user is presented with the option to start a conversation with the Negotiot, specializing in the Bhagavad Gita and Patanjali Yoga Sutras.
   - Users can enter questions or requests related to the teachings of the Bhagavad Gita, Yoga Sutras, or negotiation.
 
   #### Database Initialization
@@ -98,9 +94,9 @@ The messages table **stores messages** related to each chat.
 ### Installation steps
 
   ```
-    git clone https://github.com/Sabari2005/Hackthon_NYD.git
-    cd Hackthon_NYD
-    cd Negotio-chatbot
+    https://github.com/Sabari2005/NYD_Hackathon.git
+    cd NYD_Hackathon
+    cd Negotio
   ```
   ```
     pip install -r requirements.txt
@@ -120,7 +116,7 @@ The messages table **stores messages** related to each chat.
 
 ## Providing API service
 
-The API is built using FastAPI and is designed to be easily integrated with websites or other applications. It includes endpoints for submitting queries and retrieving responses with semantic and AI-enhanced accuracy.
+- The API is built using FastAPI and is designed to be easily integrated with websites or other applications. It includes endpoints for submitting queries and retrieving responses with semantic and AI-enhanced accuracy.
 
 ### Installation
 
@@ -130,9 +126,9 @@ The API is built using FastAPI and is designed to be easily integrated with webs
 #### Installation steps
 
   ```
-    git clone https://github.com/Sabari2005/Hackthon_NYD.git
-    cd Hackthon_NYD
-    cd Negotio-chatbot
+    https://github.com/Sabari2005/NYD_Hackathon.git
+    cd NYD_Hackathon
+    cd Negotio
   ```
   ```
     pip install -r requirements.txt
@@ -182,7 +178,7 @@ The API is built using FastAPI and is designed to be easily integrated with webs
 
 ## Demo 
 
-- Click [here](./assets/videos/demo.mp4) to see the demo video
+- Click [here](https://drive.google.com/file/d/1hamvELwKoyN44bXj4EsQwxoawWfdWGTS/view?usp=sharing) to see the demo video
 
 ## Author
 

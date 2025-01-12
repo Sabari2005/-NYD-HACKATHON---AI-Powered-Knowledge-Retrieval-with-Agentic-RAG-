@@ -8,14 +8,14 @@
 - [Built with](#built-with)
 - [Installation](#installation)
 - [Result Analysis](#resultanalysis)
-- [Feature](#features)
+- [Offline RAG Molde](#offline)
 - [Author](#author)
 
 
 ## Overview
 - This is a solution to the [The NYD Hackathon](https://unstop.com/hackathons/the-nyd-hackathon-2025-the-yoga-vivek-group-1281825). 
 
-- Our model is a **Agentic Retrieval-Augmented Generation (RAG) system**, designed to provide contextual and insightful responses from the Bhagavad Gita and Patanjali Yoga Sutra datasets. Leveraging a multi-agent architecture, it integrates semantic search using Pinecone with advanced natural language generation powered by the Llama 3.3 model through the Ollama API. The system includes a feedback loop to maintain conversational coherence, ensuring continuity and accuracy in responses. Optimized for efficiency and scalability, the model combines cutting-edge AI with a user-centric design to deliver an engaging and meaningful learning experience.
+- Our model is a **Agentic Retrieval-Augmented Generation (RAG) system**, designed to provide contextual and insightful responses from the Bhagavad Gita and Patanjali Yoga Sutra datasets. Leveraging a **multi-agent architecture**, it integrates **semantic search using Pinecone** with advanced natural language generation powered by the **Llama 3.3 model** through the Ollama API. The system includes a feedback loop to maintain conversational coherence, ensuring continuity and accuracy in responses. Optimized for efficiency and scalability, the model combines cutting-edge AI with a user-centric design to deliver an engaging and meaningful learning experience.
 
 ## Architecture Diagram
 
@@ -119,14 +119,15 @@
   4. **Continuous Learning**: Feedback loop ensures the system improves over time.
   5. **User-Centric Design**: Delivers precise, contextually relevant, and actionable responses.
 
-
+---
 
 ## Built with
-- `Programming Languages`: Python, JavaScript
-- `Machine Learning Models`: Llama 3.3 70B, MiniLM, Ollama API
+- `Programming Languages`: Python
+- `Machine Learning Models`: Llama 3.3 70B, Ollama API
 - `Vector Database`: Pinecone
-- `Tools`: SQLite3, 
-- `Development Environment`: Local inference setup, API integration, multi-agent RAG pipeline
+- `Tools`: SQLite3
+- `Development Environment`: Local inference setup, API integration, multi-agent RAG pipeline.
+
 
 ## Installation
 
@@ -143,13 +144,13 @@
   ```
   run all the cells in the rag.ipynb
   ```
-  - the rag.ipynb has the detailed steps and provides the output as a `JSON`   format and saved in the `output_folder`
+  - the rag.ipynb has the detailed steps and provides the output as a `JSON` format and saved in the `output_folder`
 
 
 ## Testing and Results
 
 - For Bhagavad Gita, we tested approximately 18 questions, and for Patanjali Yoga Sutras, we tested around 28 questions, totally **46 questions**.  
-- Our model provided literally correct answers for every question tested, demonstrating its accuracy and reliability.
+- Our model provided correct answers for every question tested, demonstrating its accuracy and reliability.
 - our test question is given in the `bagavad_gita_test_question.csv` and `Patanjali_test_question.csv` 
 - the output for each test is saved as a JSON file inside the **bagavadgita** and **yogasutra** folder
 
@@ -160,7 +161,7 @@
 
 - In the `rag2Ollama.ipynb` file we have implemented the **offline ollama model** for our Agentic Rag pipeline 
 - But this model requires High end GPU because the Ollama offline model is **high gpu intensive model**
-- this implementation gives us more faster, eligent, efficitent, more understandalbe responses   
+- this implementation gives us more faster responses than a api endpoint   
 
 ### Installation Steps 
 
@@ -172,15 +173,11 @@
   curl -fsSL https://ollama.com/install.sh | sh
   ```
 - After the ollama is downloaded run the llama 3.3
-```
-https://ollama.com/library/llama3.3
-```
-
-
-## Demo 
-
-- Click [here](./assets/videos/demo.mp4) to see the demo video
-
+  ```
+  ollama run llama3.3
+  ```
+- now our RAG pipline can acces te llama3.3 in offline 
+- run the cells in the **rag2Ollama.ipynb**
 
 ## Author
 
