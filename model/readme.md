@@ -153,6 +153,29 @@
 - our test question is given in the `bagavad_gita_test_question.csv` and `Patanjali_test_question.csv` 
 - the output for each test is saved as a JSON file inside the **bagavadgita** and **yogasutra** folder
 
+## Screenshots
+<img src="../assets/pinecone.png">
+
+## Offline RAG model
+
+- In the `rag2Ollama.ipynb` file we have implemented the **offline ollama model** for our Agentic Rag pipeline 
+- But this model requires High end GPU because the Ollama offline model is **high gpu intensive model**
+- this implementation gives us more faster, eligent, efficitent, more understandalbe responses   
+
+### Installation Steps 
+
+- open the [ollama website](https://ollama.com/download/linux
+) 
+- copy the code for linux and run it in the terminal
+  
+  ```
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+- After the ollama is downloaded run the llama 3.3
+```
+https://ollama.com/library/llama3.3
+```
+
 
 ## Demo 
 

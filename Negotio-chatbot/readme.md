@@ -105,10 +105,9 @@ The messages table **stores messages** related to each chat.
   ```
     pip install -r requirements.txt
   ```
-
+  - run the server
   ```
   python app.py
-
   ```
   - Open ` http://127.0.0.1:8000` in your browser
   

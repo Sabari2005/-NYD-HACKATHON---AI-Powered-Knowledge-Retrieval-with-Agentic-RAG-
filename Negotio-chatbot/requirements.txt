@@ -1,9 +1,9 @@
 fastapi
 uvicorn
 jinja2
-passlib[bcrypt]
+passlib
 pandas
 sentence-transformers
-pinecone-client
+pinecone
 groq
-sqlite3
+
