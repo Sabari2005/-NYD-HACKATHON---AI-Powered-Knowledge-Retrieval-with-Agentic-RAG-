@@ -137,7 +137,7 @@ The messages table **stores messages** related to each chat.
   ```
   python api.py
   ```
-  -  Now you can access our model using the api endpoint `127.0.0.2:8001/send-test`
+  -  Now you can access our model using the api endpoint `127.0.0.2:8001/send-text`
 
 ## Steps to access the endpoint using postman
 

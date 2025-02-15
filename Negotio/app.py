@@ -106,8 +106,8 @@ def settingChatid(current_chat_id):
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=["http://127.0.0.1:8000","http://127.0.0.2:5501"],  # Adjust origins for production
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:8000","http://127.0.0.2:5501"],  # Adjust origins for production
+    # allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -122,7 +122,7 @@ USERS = {
 @app.get("/", response_class=HTMLResponse)
 async def login_page(request: Request):
     """login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/signup", response_class=HTMLResponse)
 async def signup_page(request: Request):
